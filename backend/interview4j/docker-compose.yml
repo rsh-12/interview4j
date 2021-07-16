@@ -1,0 +1,19 @@
+version: '3.8'
+
+networks:
+  backend:
+
+services:
+  db:
+    image: mongo
+    container_name: mongodb
+    networks:
+      backend:
+        aliases:
+          - "mongodb"
+    ports:
+      - 27017:27017
+    volumes:
+      - /datastore/dbdata:/data/db # custom path
+      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    environment:
