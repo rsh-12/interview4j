@@ -12,11 +12,11 @@ public class User {
 
     }
 
-    public void setUsername() {
+    public void setUsername(String username) {
 
     }
 
-    public void setPassword() {
+    public void setPassword(String password) {
     }
 
     public String getUsername() {
