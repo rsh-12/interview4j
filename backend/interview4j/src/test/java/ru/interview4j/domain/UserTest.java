@@ -19,8 +19,8 @@ public class UserTest {
     void setUp() {
         user = new User();
         user.setId("id");
-        user.setUsername();
-        user.setPassword();
+        user.setUsername("username");
+        user.setPassword("password");
     }
 
     @Test
