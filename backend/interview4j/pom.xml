@@ -116,8 +116,7 @@
                 </dependencies>
 
                 <configuration>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <repoToken>${COVERALLS_TOKEN}</repoToken>
+                    <repoToken>${TOKEN}</repoToken>
                 </configuration>
             </plugin>
 
