@@ -1,4 +1,6 @@
-[![CircleCI](https://circleci.com/gh/rsh-12/interview4j/tree/main.svg?style=svg)](https://circleci.com/gh/rsh-12/interview4j/tree/main)
+image:https://circleci.com/gh/rsh-12/interview4j/tree/main.svg?style=svg&circle-token=4464b3e3104cde209fefeb125eba041de86c6837["CircleCI", link="https://circleci.com/gh/rsh-12/interview4j/tree/main"]
+
+[![Coverage Status](https://coveralls.io/repos/github/rsh-12/interview4j/badge.svg?branch=main&t=NdQH2B)](https://coveralls.io/github/rsh-12/interview4j?branch=main)
 
 
 <h1 align="center">Mock Interview Java</h1> 
