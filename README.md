@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/rsh-12/interview4j.svg?token=xTEGsfjorZw9xyXoJXRQ&branch=main)](https://travis-ci.com/rsh-12/interview4j)
+[![CircleCI](https://circleci.com/gh/rsh-12/interview4j/tree/main.svg?style=svg)](https://circleci.com/gh/rsh-12/interview4j/tree/main)
 
 
 <h1 align="center">Mock Interview Java</h1> 
