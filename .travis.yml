@@ -9,4 +9,4 @@ cache:
     - $HOME/.m2/repository
 
 script:
-  - ./mvnw test jacoco:report coveralls:report
+  - cd backend/interview4j/ && ./mvnw test jacoco:report coveralls:report
