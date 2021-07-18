@@ -28,10 +28,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+<!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
         </dependency>
+-->
 
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -130,10 +132,17 @@
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>ru/interview4j/Interview4jApplication</exclude>
+                        <exclude>ru/interview4j/Interview4jApplication.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>
