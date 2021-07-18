@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/rsh-12/interview4j.svg?token=xTEGsfjorZw9xyXoJXRQ&branch=main)](https://travis-ci.com/rsh-12/interview4j)
+
+
 <h1 align="center">Mock Interview Java</h1> 
 
 ### <b>Цель</b>: создать проект для самотестирования и выявления пробелов в теоретических знаниях <i>Java</i>.
