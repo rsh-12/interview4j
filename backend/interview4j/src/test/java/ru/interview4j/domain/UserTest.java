@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
 
@@ -21,6 +21,8 @@ public class UserTest {
         user.setId("id");
         user.setUsername("username");
         user.setPassword("password");
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
     }
 
     @Test
@@ -40,19 +42,56 @@ public class UserTest {
 
     @Test
     public void getCreatedAt_ShouldReturnCreatedAt() {
-        assertEquals(new Date(), user.getCreatedAt());
+        assertEquals(new Date().toString(), user.getCreatedAt().toString());
     }
 
     @Test
     public void getUpdatedAt_ShouldReturnUpdatedAt() {
-        assertEquals(new Date(), user.getUpdatedAt());
+        assertEquals(new Date().toString(), user.getUpdatedAt().toString());
     }
 
     @Test
     public void toString_ShouldBeEquals() {
-        String toStr = String.format("User{id='%s', username='%s', password='%s', createdAt='%s', updatedAt='%s'}",
+        String toStr = String.format("User{id='%s', username='%s', password='%s', createdAt=%s, updatedAt=%s}",
                 user.getId(), user.getUsername(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
         assertEquals(toStr, user.toString());
+    }
+
+    @Test
+    public void equals_ShouldBeEqual() {
+        User newUser = new User();
+        newUser.setId("id");
+        assertEquals(user, newUser);
+    }
+
+    @Test
+    public void equals_ShouldNotBeEqual() {
+        User newUser = new User();
+        newUser.setId("none");
+        assertNotEquals(user, newUser);
+    }
+
+    @Test
+    public void equals_SameObjects_ShouldBeEqual() {
+        assertEquals(user, user);
+    }
+
+    @Test
+    public void equals_Null_ShouldNotBeEqual() {
+        assertFalse(user.equals(null));
+    }
+
+    @Test
+    public void hashcode_Symmetric_ShouldBeEqual() {
+        User newUser = new User();
+        newUser.setId("id");
+        assertTrue(user.equals(newUser) && newUser.equals(user));
+        assertEquals(user.hashCode(), newUser.hashCode());
+    }
+
+    @Test
+    public void hashcode_Null_ShouldReturnNull() {
+        assertEquals(0, new User().hashCode());
     }
 
 }
