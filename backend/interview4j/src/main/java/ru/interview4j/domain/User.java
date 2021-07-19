@@ -4,15 +4,33 @@ package ru.interview4j.domain;
  * Time: 8:34 AM
  * */
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Objects;
 
+@Document(collection = "users")
 public class User {
 
+    @Id
     private String id;
+
+    @Indexed(unique = true)
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
+
+    @CreatedDate
     private Date createdAt;
+
+    @LastModifiedDate
     private Date updatedAt;
 
     public String getId() {
