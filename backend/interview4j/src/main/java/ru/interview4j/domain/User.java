@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,11 +21,13 @@ public class User {
     @Id
     private String id;
 
-    @Indexed(unique = true)
     @NotBlank
+    @Size(min = 8, max = 16)
+    @Indexed(unique = true)
     private String username;
 
     @NotBlank
+    @Size(min = 8, max = 128)
     private String password;
 
     @CreatedDate
