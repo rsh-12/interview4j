@@ -17,10 +17,8 @@ public class UserTest {
 
     @BeforeEach
     void setUp() {
-        user = new User();
+        user = new User("username", "password");
         user.setId("id");
-        user.setUsername("username");
-        user.setPassword("password");
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
     }
