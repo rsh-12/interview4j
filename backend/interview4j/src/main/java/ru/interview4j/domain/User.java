@@ -4,6 +4,7 @@ package ru.interview4j.domain;
  * Time: 8:34 AM
  * */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,6 +27,7 @@ public class User {
     @Indexed(unique = true)
     private String username;
 
+    @JsonIgnore
     @NotBlank
     @Size(min = 8, max = 128)
     private String password;
