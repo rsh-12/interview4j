@@ -66,7 +66,7 @@ public class UserTest {
 
     @Test
     public void equals_ShouldNotBeEqual() {
-        User newUser = new User();
+        User newUser = new User("username", "password");
         newUser.setId("none");
         assertNotEquals(user, newUser);
     }
