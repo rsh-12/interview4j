@@ -18,16 +18,10 @@ public class UserTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setId("id");
         user.setUsername("username");
         user.setPassword("password");
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
-    }
-
-    @Test
-    public void getId_ShouldReturnId() {
-        assertEquals("id", user.getId());
     }
 
     @Test
@@ -60,14 +54,14 @@ public class UserTest {
     @Test
     public void equals_ShouldBeEqual() {
         User newUser = new User();
-        newUser.setId("id");
+        newUser.setUsername("username");
         assertEquals(user, newUser);
     }
 
     @Test
     public void equals_ShouldNotBeEqual() {
         User newUser = new User("username", "password");
-        newUser.setId("none");
+        newUser.setUsername("none");
         assertNotEquals(user, newUser);
     }
 
@@ -83,15 +77,10 @@ public class UserTest {
 
     @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
-        User newUser = new User();
-        newUser.setId("id");
+        User newUser = new User("username", "password");
+        newUser.setUsername("username");
         assertTrue(user.equals(newUser) && newUser.equals(user));
         assertEquals(user.hashCode(), newUser.hashCode());
-    }
-
-    @Test
-    public void hashcode_Null_ShouldReturnNull() {
-        assertEquals(0, new User().hashCode());
     }
 
 }
