@@ -16,6 +16,12 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * The main entity of the app, used for authentication/authorization,
+ * creating sections and questions.
+ *
+ * @author rsh-12
+ */
 @Document(collection = "users")
 public class User {
 
@@ -105,7 +111,6 @@ public class User {
         return "User{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
