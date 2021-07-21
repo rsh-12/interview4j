@@ -50,10 +50,6 @@ public class User {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -93,12 +89,15 @@ public class User {
 
         User user = (User) o;
 
-        return Objects.equals(id, user.id);
+        if (!Objects.equals(id, user.id)) return false;
+        return username.equals(user.username);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + username.hashCode();
+        return result;
     }
 
     @Override
