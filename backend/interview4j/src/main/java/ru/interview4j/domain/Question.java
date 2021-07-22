@@ -1,16 +1,13 @@
 package ru.interview4j.domain;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
@@ -19,34 +16,30 @@ import java.util.Date;
  * id , title of question , body , date of created , and modified.
  * Inner in body will be right answer of question.
  *
- * @author  shele
- *
- *
- *
+ * @author shele
  */
 @Data
+@RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = {"id"}) // будем сравнивать объекты только по id
 @Table("question")
-public class Questions {
-    public Questions(String title, String body) {
-        this.title = title;
-        this.body = body;
-    }
+public class Question {
+
     @Id
     private Long id;
+
+    @NonNull
     @NotBlank
-    @Column
-    @NotNull
     private String title;
+
+    @NonNull
     @NotBlank
-    @Column
-    @NotNull
     private String body;
+
     @CreatedDate
     private Date createdAt;
+
     @LastModifiedDate
-    private  Date modifiedAt;
+    private Date modifiedAt;
 
-
-    //private User user;
 }
