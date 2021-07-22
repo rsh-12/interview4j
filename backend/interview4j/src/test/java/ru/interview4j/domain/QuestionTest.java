@@ -43,12 +43,12 @@ class QuestionTest {
 
     @Test
     public void equals_ShouldBeEqual() {
-        assertEquals(question, new Question("New question", "Body"));
+        assertEquals(question, new Question("New question", "Body", 1L));
     }
 
     @Test
     public void equals_ShouldNotBeEqual() {
-        assertNotEquals(question, new Question("Title", "body"));
+        assertNotEquals(question, new Question("Title", "body", 1L));
     }
 
     @Test
@@ -63,16 +63,16 @@ class QuestionTest {
 
     @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
-        Question newQuestion = new Question("New question", "Body");
+        Question newQuestion = new Question("New question", "Body", 1L);
         assertTrue(question.equals(newQuestion) && newQuestion.equals(question));
         assertEquals(question.hashCode(), newQuestion.hashCode());
     }
 
     @Test
     public void toString_ShouldBeEqual() {
-        String toStr = String.format("Question(id=%s, title=%s, body=%s, createdAt=%s, updatedAt=%s)",
+        String toStr = String.format("Question(id=%s, title=%s, body=%s, createdAt=%s, updatedAt=%s, userId=%s)",
                 question.getId(), question.getTitle(), question.getBody(),
-                question.getCreatedAt(), question.getUpdatedAt());
+                question.getCreatedAt(), question.getUpdatedAt(), question.getUserId());
 
         assertEquals(toStr, question.toString());
     }
