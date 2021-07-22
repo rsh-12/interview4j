@@ -76,4 +76,12 @@ public class UserTest {
         assertEquals(user.hashCode(), newUser.hashCode());
     }
 
+    @Test
+    public void toString_ShouldBeEqual() {
+        String toStr = String.format("User(id=%s, username=%s, password=%s, createdAt=%s, updatedAt=%s)",
+                user.getId(), user.getUsername(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
+
+        assertEquals(toStr, user.toString());
+    }
+
 }
