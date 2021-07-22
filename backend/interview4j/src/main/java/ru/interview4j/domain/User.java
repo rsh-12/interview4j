@@ -38,7 +38,7 @@ public class User {
 
     @NonNull
     @NotBlank
-    @Size(min = 8, max = 16)
+    @Size(min = 3, max = 20)
     private String username;
 
     @JsonIgnore
