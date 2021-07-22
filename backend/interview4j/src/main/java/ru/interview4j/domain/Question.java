@@ -21,7 +21,7 @@ import java.util.Date;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"}) // будем сравнивать объекты только по id
+@EqualsAndHashCode(of = {"id"})
 @Table("question")
 public class Question {
 
