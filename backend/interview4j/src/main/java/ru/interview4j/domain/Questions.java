@@ -33,7 +33,6 @@ public class Questions {
         this.body = body;
     }
     @Id
-    @NotNull
     private Long id;
     @NotBlank
     @Column
