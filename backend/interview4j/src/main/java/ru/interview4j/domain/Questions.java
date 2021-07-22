@@ -28,12 +28,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Table("question")
 public class Questions {
-
     public Questions(String title, String body) {
         this.title = title;
         this.body = body;
     }
     @Id
+    @NotNull
     private Long id;
     @NotBlank
     @Column
