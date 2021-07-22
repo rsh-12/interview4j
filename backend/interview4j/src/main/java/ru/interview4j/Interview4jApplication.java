@@ -2,9 +2,9 @@ package ru.interview4j;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.config.EnableReactiveMongoAuditing;
+import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
 
-@EnableReactiveMongoAuditing
+@EnableR2dbcAuditing
 @SpringBootApplication
 public class Interview4jApplication {
 
