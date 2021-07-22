@@ -13,15 +13,15 @@ import java.util.Date;
 
 /**
  * Entity class for user's question. It contains
- * id , title of question , body , date of created , and modified.
+ * id, title of question, body, date of created, and modified.
  * Inner in body will be right answer of question.
  *
  * @author shele
  */
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
+@RequiredArgsConstructor
+@EqualsAndHashCode(of = {"id", "title"})
 @Table("question")
 public class Question {
 
@@ -40,6 +40,6 @@ public class Question {
     private Date createdAt;
 
     @LastModifiedDate
-    private Date modifiedAt;
+    private Date updatedAt;
 
 }
