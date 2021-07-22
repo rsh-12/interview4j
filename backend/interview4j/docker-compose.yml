@@ -5,15 +5,18 @@ networks:
 
 services:
   db:
-    image: mongo
-    container_name: mongodb
+    image: postgres:11.4-alpine
+    container_name: postgres
     networks:
       backend:
         aliases:
-          - "mongodb"
+          - "database"
     ports:
-      - 27017:27017
+      - 5430:5432
     volumes:
-      - /datastore/dbdata:/data/db # custom path
-      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - /datastore/pg_data:/var/lib/postgresql/data/pgdata
     environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PWD}
+      POSTGRES_DB: interview4jdb
+      PGDATA: /var/lib/postgresql/data/pgdata

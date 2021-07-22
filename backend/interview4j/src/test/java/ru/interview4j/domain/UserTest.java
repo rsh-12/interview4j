@@ -45,13 +45,6 @@ public class UserTest {
     }
 
     @Test
-    public void toString_ShouldBeEquals() {
-        String toStr = String.format("User{id='%s', username='%s', password='%s', createdAt=%s, updatedAt=%s}",
-                user.getId(), user.getUsername(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
-        assertEquals(toStr, user.toString());
-    }
-
-    @Test
     public void equals_ShouldBeEqual() {
         User newUser = new User();
         newUser.setUsername("username");
