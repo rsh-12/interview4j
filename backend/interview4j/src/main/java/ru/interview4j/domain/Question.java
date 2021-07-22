@@ -42,4 +42,7 @@ public class Question {
     @LastModifiedDate
     private Date updatedAt;
 
+    @NonNull
+    private Long userId;
+
 }
