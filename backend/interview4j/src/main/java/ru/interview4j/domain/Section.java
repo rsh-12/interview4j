@@ -13,6 +13,13 @@ import org.springframework.data.relational.core.mapping.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * This class is associated with the {@link User} and {@link Question} classes.
+ *
+ * @author rsh12
+ * @see User
+ * @see Question
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "title"})
