@@ -5,11 +5,7 @@ package ru.interview4j.domain;
  * */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,7 +24,6 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode(of = {"id", "username"})
 @Table("usr")
 public class User {
@@ -48,9 +43,15 @@ public class User {
     private String password;
 
     @CreatedDate
-    private Date createdAt;
+    private Date createdAt = new Date();
 
     @LastModifiedDate
-    private Date updatedAt;
+    private Date updatedAt = new Date();
+
+    @Builder(setterPrefix = "set")
+    public User(@NonNull String username, @NonNull String password) {
+        this.username = username;
+        this.password = password;
+    }
 
 }

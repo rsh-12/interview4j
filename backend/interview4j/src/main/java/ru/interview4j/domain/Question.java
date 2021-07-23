@@ -20,7 +20,6 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode(of = {"id", "title"})
 @Table("question")
 public class Question {
@@ -37,15 +36,23 @@ public class Question {
     private String body;
 
     @CreatedDate
-    private Date createdAt;
+    private Date createdAt = new Date();
 
     @LastModifiedDate
-    private Date updatedAt;
+    private Date updatedAt = new Date();
 
     @NonNull
     private Long sectionId;
 
     @NonNull
     private Long userId;
+
+    @Builder(setterPrefix = "set")
+    public Question(@NonNull String title, @NonNull String body, @NonNull Long sectionId, @NonNull Long userId) {
+        this.title = title;
+        this.body = body;
+        this.sectionId = sectionId;
+        this.userId = userId;
+    }
 
 }

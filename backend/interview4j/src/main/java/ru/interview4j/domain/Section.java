@@ -15,7 +15,6 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode(of = {"id", "title"})
 @Table("section")
 public class Section {
@@ -28,12 +27,18 @@ public class Section {
     private String title;
 
     @CreatedDate
-    private Date createdAt;
+    private Date createdAt = new Date();
 
     @LastModifiedDate
-    private Date updatedAt;
+    private Date updatedAt = new Date();
 
     @NonNull
     private Long userId;
+
+    @Builder(setterPrefix = "set")
+    public Section(@NonNull String title, @NonNull Long userId) {
+        this.title = title;
+        this.userId = userId;
+    }
 
 }
