@@ -43,6 +43,9 @@ public class Question {
     private Date updatedAt;
 
     @NonNull
+    private Long sectionId;
+
+    @NonNull
     private Long userId;
 
 }
