@@ -23,5 +23,4 @@ public class Role {
     @NonNull
     private ERole name;
 
-
 }
