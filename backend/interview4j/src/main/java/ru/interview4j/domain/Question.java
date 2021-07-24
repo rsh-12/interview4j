@@ -48,7 +48,7 @@ public class Question {
     private Long userId;
 
     @Builder(setterPrefix = "set")
-    public Question(@NonNull String title, @NonNull String body, @NonNull Long sectionId, @NonNull Long userId) {
+    private Question(@NonNull String title, @NonNull String body, @NonNull Long sectionId, @NonNull Long userId) {
         this.title = title;
         this.body = body;
         this.sectionId = sectionId;
