@@ -22,8 +22,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // roleRepo = findByUserId(Long userId)
-        return null;
+        return user.getRoles();
     }
 
     @Override
