@@ -17,11 +17,12 @@ create table role
 
 create table user_role
 (
-    id      bigint primary key,
+
     user_id bigint references usr (id) on update cascade on delete cascade,
     role_id bigint references role (id) on update cascade on delete cascade,
-    unique (user_id, role_id)
+    primary key (user_id, role_id)
 );
+
 create table section
 (
     id         bigserial primary key,
