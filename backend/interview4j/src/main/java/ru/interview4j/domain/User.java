@@ -5,13 +5,18 @@ package ru.interview4j.domain;
  * */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -31,13 +36,11 @@ public class User {
     @Id
     private Long id;
 
-    @NonNull
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
 
     @JsonIgnore
-    @NonNull
     @NotBlank
     @Size(min = 8, max = 128)
     private String password;
