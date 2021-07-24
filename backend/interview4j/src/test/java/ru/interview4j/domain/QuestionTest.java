@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class QuestionTest {
@@ -31,12 +34,20 @@ class QuestionTest {
 
     @Test
     public void equals_ShouldBeEqual() {
-        assertEquals(question, new Question("New question", "Body", 1L, 1L));
+        Question question2 = new Question.QuestionBuilder()
+                .setTitle("New question").setBody("Body")
+                .setSectionId(1L).setUserId(1L)
+                .build();
+        assertEquals(question, question2);
     }
 
     @Test
     public void equals_ShouldNotBeEqual() {
-        assertNotEquals(question, new Question("Title", "body", 1L, 1L));
+        Question question2 = new Question.QuestionBuilder()
+                .setTitle("Title").setBody("Body")
+                .setSectionId(1L).setUserId(1L)
+                .build();
+        assertNotEquals(question, question2);
     }
 
     @Test
@@ -51,7 +62,10 @@ class QuestionTest {
 
     @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
-        Question newQuestion = new Question("New question", "Body", 1L, 1L);
+        Question newQuestion = new Question.QuestionBuilder()
+                .setTitle("New question").setBody("Body")
+                .setSectionId(1L).setUserId(1L)
+                .build();
         assertTrue(question.equals(newQuestion) && newQuestion.equals(question));
         assertEquals(question.hashCode(), newQuestion.hashCode());
     }
