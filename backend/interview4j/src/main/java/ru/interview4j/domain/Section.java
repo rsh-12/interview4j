@@ -1,5 +1,8 @@
 package ru.interview4j.domain;
-
+/*
+ * Date: 22.07.2021
+ * Time: 11:45 PM
+ * */
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,19 +13,18 @@ import org.springframework.data.relational.core.mapping.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-
 /**
- * Entity class for user's question. It contains
- * id, title of question, body, date of created, and modified.
- * Inner in body will be right answer of question.
+ * This class is associated with the {@link User} and {@link Question} classes.
  *
- * @author shele
+ * @author rsh12
+ * @see User
+ * @see Question
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "title"})
-@Table("question")
-public class Question {
+@Table("section")
+public class Section {
 
     @Id
     private Long id;
@@ -31,10 +33,6 @@ public class Question {
     @NotBlank
     private String title;
 
-    @NonNull
-    @NotBlank
-    private String body;
-
     @CreatedDate
     private Date createdAt = new Date();
 
@@ -42,16 +40,11 @@ public class Question {
     private Date updatedAt = new Date();
 
     @NonNull
-    private Long sectionId;
-
-    @NonNull
     private Long userId;
 
     @Builder(setterPrefix = "set")
-    private Question(@NonNull String title, @NonNull String body, @NonNull Long sectionId, @NonNull Long userId) {
+    public Section(@NonNull String title, @NonNull Long userId) {
         this.title = title;
-        this.body = body;
-        this.sectionId = sectionId;
         this.userId = userId;
     }
 

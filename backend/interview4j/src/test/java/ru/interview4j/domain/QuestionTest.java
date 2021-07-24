@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class QuestionTest {
@@ -22,33 +25,29 @@ class QuestionTest {
     }
 
     @Test
-    void getTitle_ShouldBeEqual() {
+    public void getters_ShouldReturnCorrectData() {
         assertEquals("New question", question.getTitle());
-    }
-
-    @Test
-    void getBody_ShouldBeEqual() {
         assertEquals("Answer of question is", question.getBody());
-    }
-
-    @Test
-    public void getCreatedAt_ShouldReturnCreatedAt() {
         assertEquals(new Date().toString(), question.getCreatedAt().toString());
-    }
-
-    @Test
-    public void getUpdatedAt_ShouldReturnUpdatedAt() {
         assertEquals(new Date().toString(), question.getUpdatedAt().toString());
     }
 
     @Test
     public void equals_ShouldBeEqual() {
-        assertEquals(question, new Question("New question", "Body"));
+        Question question2 = new Question.QuestionBuilder()
+                .setTitle("New question").setBody("Body")
+                .setSectionId(1L).setUserId(1L)
+                .build();
+        assertEquals(question, question2);
     }
 
     @Test
     public void equals_ShouldNotBeEqual() {
-        assertNotEquals(question, new Question("Title", "body"));
+        Question question2 = new Question.QuestionBuilder()
+                .setTitle("Title").setBody("Body")
+                .setSectionId(1L).setUserId(1L)
+                .build();
+        assertNotEquals(question, question2);
     }
 
     @Test
@@ -63,16 +62,20 @@ class QuestionTest {
 
     @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
-        Question newQuestion = new Question("New question", "Body");
+        Question newQuestion = new Question.QuestionBuilder()
+                .setTitle("New question").setBody("Body")
+                .setSectionId(1L).setUserId(1L)
+                .build();
         assertTrue(question.equals(newQuestion) && newQuestion.equals(question));
         assertEquals(question.hashCode(), newQuestion.hashCode());
     }
 
     @Test
     public void toString_ShouldBeEqual() {
-        String toStr = String.format("Question(id=%s, title=%s, body=%s, createdAt=%s, updatedAt=%s)",
-                question.getId(), question.getTitle(), question.getBody(),
-                question.getCreatedAt(), question.getUpdatedAt());
+        String toStr = String
+                .format("Question(id=%s, title=%s, body=%s, createdAt=%s, updatedAt=%s, sectionId=%s, userId=%s)",
+                        question.getId(), question.getTitle(), question.getBody(), question.getCreatedAt(),
+                        question.getUpdatedAt(), question.getSectionId(), question.getUserId());
 
         assertEquals(toStr, question.toString());
     }
