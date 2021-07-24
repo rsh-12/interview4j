@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import ru.interview4j.domain.User;
 import ru.interview4j.repository.UserRepository;
 import ru.interview4j.service.UserService;
 
@@ -27,4 +28,8 @@ public class UserServiceImpl implements UserService {
                 .cast(UserDetails.class);
     }
 
+    @Override
+    public Mono<User> findUserById(Long userId) {
+        return userRepository.findById(userId);
+    }
 }
