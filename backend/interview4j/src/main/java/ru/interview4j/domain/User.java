@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,10 +48,10 @@ public class User {
     private String password;
 
     @CreatedDate
-    private Date createdAt = new Date();
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private Date updatedAt = new Date();
+    private LocalDateTime updatedAt;
 
     @Transient
     private Set<Role> roles = new HashSet<>();
