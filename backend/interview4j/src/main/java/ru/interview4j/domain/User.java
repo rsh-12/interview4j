@@ -18,6 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -46,10 +47,10 @@ public class User {
     private String password;
 
     @CreatedDate
-    private Date createdAt = new Date();
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private Date updatedAt = new Date();
+    private LocalDateTime updatedAt;
 
     @Builder(setterPrefix = "set")
     public User(@NonNull String username, @NonNull String password) {
