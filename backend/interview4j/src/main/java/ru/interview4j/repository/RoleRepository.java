@@ -9,6 +9,6 @@ import ru.interview4j.domain.Role;
 public interface RoleRepository extends ReactiveCrudRepository<Role, Long> {
 
     @Query("select id, name from role join user_role ur on role.id = ur.role_id where user_id = :userId")
-    Flux<Role> findUserRoles(@Param("userId") Long id);
+    Flux<Role> findRolesByUserId(@Param("userId") Long id);
 
 }

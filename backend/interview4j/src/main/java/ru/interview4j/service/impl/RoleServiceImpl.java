@@ -23,7 +23,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Flux<Role> findUserRoles(Long userId) {
-        return roleRepository.findUserRoles(userId);
+        return roleRepository.findRolesByUserId(userId);
     }
 
 }
