@@ -4,6 +4,7 @@ package ru.interview4j.domain;
  * Time: 10:46 AM
  * */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -21,6 +22,7 @@ public class Role implements GrantedAuthority {
     @Id
     private Long id;
 
+    @JsonIgnore
     @NonNull
     private ERole name;
 
