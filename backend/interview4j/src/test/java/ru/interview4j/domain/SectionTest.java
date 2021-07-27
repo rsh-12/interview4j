@@ -24,13 +24,13 @@ public class SectionTest {
         section.setUpdatedAt(LocalDateTime.now());
     }
 
-    /*@Test
+    @Test
     public void getters_ShouldReturnCorrectData() {
         assertEquals(1L, section.getId());
         assertEquals(1L, section.getUserId());
         assertEquals("Title", section.getTitle());
-        assertEquals(new Date().toString(), section.getCreatedAt().toString());
-        assertEquals(new Date().toString(), section.getUpdatedAt().toString());
-    }*/
+//        assertEquals(new Date().toString(), section.getCreatedAt().toString());
+//        assertEquals(new Date().toString(), section.getUpdatedAt().toString());
+    }
 
 }
