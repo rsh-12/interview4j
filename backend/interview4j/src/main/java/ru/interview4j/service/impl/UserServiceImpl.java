@@ -10,10 +10,15 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import ru.interview4j.domain.Role;
 import ru.interview4j.domain.User;
+import ru.interview4j.dto.RoleDto;
+import ru.interview4j.dto.UserDto;
 import ru.interview4j.repository.UserRepository;
 import ru.interview4j.service.RoleService;
 import ru.interview4j.service.UserService;
+
+import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -32,29 +37,39 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<UserDetails> findByUsername(String username) {
         Mono<User> userMono = userRepository.findByUsername(username);
-        Flux<User> userFlux = fetchRoles(userMono);
+        Flux<UserDto> userFlux = fetchRoles(userMono);
 
         return Mono.from(userFlux).cast(UserDetails.class);
     }
 
     @Override
-    public Mono<User> findUserById(Long userId) {
+    public Mono<UserDto> findUserById(Long userId) {
         Mono<User> userMono = userRepository.findById(userId);
-        Flux<User> userFlux = fetchRoles(userMono);
+        Flux<UserDto> userDtoFlux = fetchRoles(userMono);
 
-        return Mono.from(userFlux).log();
+        return Mono.from(userDtoFlux).log();
     }
 
-    private Flux<User> fetchRoles(Mono<User> userMono) {
-        return userMono
-                .log()
+    private Flux<UserDto> fetchRoles(Mono<User> userMono) {
+        return userMono.log()
                 .flatMapMany(user -> roleService.findUserRoles(user.getId())
                         .collect(toSet())
                         .map(roles -> {
                             user.setRoles(roles);
                             return user;
-                        })).subscribeOn(Schedulers.parallel());
+                        })
+                        .map(this::mapToUserDto)).subscribeOn(Schedulers.parallel());
     }
 
+    private UserDto mapToUserDto(User user) {
+        return new UserDto(user.getUsername(), user.getCreatedAt(),
+                user.getUpdatedAt(), mapToRoleDto(user.getRoles()));
+    }
+
+    private Set<RoleDto> mapToRoleDto(Set<Role> roles) {
+        return roles.stream()
+                .map(role -> new RoleDto(role.getName()))
+                .collect(toSet());
+    }
 
 }
