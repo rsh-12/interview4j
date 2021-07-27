@@ -5,12 +5,13 @@ package ru.interview4j.handler;
  * */
 
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import ru.interview4j.domain.User;
+import ru.interview4j.dto.UserDto;
 import ru.interview4j.service.UserService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -27,13 +28,12 @@ public class UserHandler {
         this.userService = userService;
     }
 
-    public Mono<ServerResponse> getUserById(ServerRequest request) {
+    public @NonNull Mono<ServerResponse> getUserById(ServerRequest request) {
         Mono<ServerResponse> notFound = ServerResponse.notFound().build();
-
         Long userId = Long.valueOf(request.pathVariable("id"));
-        Mono<User> user = userService.findUserById(userId);
 
-        return user.flatMap(u -> ServerResponse
+        Mono<UserDto> userDtoMono = userService.findUserById(userId);
+        return userDtoMono.flatMap(u -> ServerResponse
                 .ok().contentType(APPLICATION_JSON)
                 .body(fromValue(u)))
                 .switchIfEmpty(notFound);
