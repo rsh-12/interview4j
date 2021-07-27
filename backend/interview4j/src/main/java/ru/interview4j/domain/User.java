@@ -13,13 +13,14 @@ import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -51,6 +52,9 @@ public class User {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @Transient
+    private Set<Role> roles = new HashSet<>();
 
     @Builder(setterPrefix = "set")
     public User(@NonNull String username, @NonNull String password) {
