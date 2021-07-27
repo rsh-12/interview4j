@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.interview4j.domain.User;
 
 import java.util.Collection;
-import java.util.Collections;
 
 @Getter
 public class UserDetailsImpl implements UserDetails {
@@ -23,8 +22,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return user.getRoles();
-        return Collections.emptyList();
+        return user.getRoles();
     }
 
     @Override
