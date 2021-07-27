@@ -15,7 +15,7 @@ import ru.interview4j.repository.UserRepository;
 import ru.interview4j.service.RoleService;
 import ru.interview4j.service.UserService;
 
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toSet;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,23 +31,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .cast(UserDetails.class);
+        Mono<User> userMono = userRepository.findByUsername(username);
+        Flux<User> userFlux = fetchRoles(userMono);
+
+        return Mono.from(userFlux).cast(UserDetails.class);
     }
 
     @Override
     public Mono<User> findUserById(Long userId) {
         Mono<User> userMono = userRepository.findById(userId);
+        Flux<User> userFlux = fetchRoles(userMono);
 
-        Flux<User> userFlux = userMono.log()
-                .flatMapMany(user -> roleService.findUserRoles(userId)
-                        .collect(Collectors.toSet())
+        return Mono.from(userFlux).log();
+    }
+
+    private Flux<User> fetchRoles(Mono<User> userMono) {
+        return userMono
+                .log()
+                .flatMapMany(user -> roleService.findUserRoles(user.getId())
+                        .collect(toSet())
                         .map(roles -> {
                             user.setRoles(roles);
                             return user;
                         })).subscribeOn(Schedulers.parallel());
-
-        return Mono.from(userFlux).log();
     }
 
 
