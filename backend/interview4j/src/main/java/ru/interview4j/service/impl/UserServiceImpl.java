@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<UserDetails> findByUsername(String username) {
         Mono<User> userMono = userRepository.findByUsername(username);
-        Flux<UserDto> userFlux = fetchRoles(userMono);
+        Flux<User> userFlux = fetchUserRoles(userMono);
 
         return Mono.from(userFlux).cast(UserDetails.class);
     }
@@ -59,6 +59,16 @@ public class UserServiceImpl implements UserService {
                             return user;
                         })
                         .map(this::mapToUserDto)).subscribeOn(Schedulers.parallel());
+    }
+
+    private Flux<User> fetchUserRoles(Mono<User> userMono) {
+        return userMono.log()
+                .flatMapMany(user -> roleService.findUserRoles(user.getId())
+                        .collect(toSet())
+                        .map(roles -> {
+                            user.setRoles(roles);
+                            return user;
+                        }));
     }
 
     private UserDto mapToUserDto(User user) {
