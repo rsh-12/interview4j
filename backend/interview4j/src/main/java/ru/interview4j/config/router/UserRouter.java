@@ -27,7 +27,7 @@ public class UserRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction() {
+    public RouterFunction<ServerResponse> userRoutes() {
         return route(GET("/api/users/{id}").and(accept(APPLICATION_JSON)),
                 userHandler::getUserById);
     }
