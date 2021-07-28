@@ -40,14 +40,10 @@ public class WebSecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
                 .exceptionHandling()
-                .authenticationEntryPoint(
-                        (swe, e) -> Mono.fromRunnable(() ->
-                                swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))
-                )
-                .accessDeniedHandler(
-                        (swe, e) -> Mono.fromRunnable(() ->
-                                swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN))
-                )
+                .authenticationEntryPoint(((serverWebExchange, exp) ->
+                        Mono.fromRunnable(() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED))))
+                .accessDeniedHandler((serverWebExchange, exp) ->
+                        Mono.fromRunnable(() -> serverWebExchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
                 .and()
                 .csrf().disable()
                 .formLogin().disable()
