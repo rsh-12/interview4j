@@ -86,8 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserDto mapToUserDto(User user) {
-        return new UserDto(user.getUsername(), user.getCreatedAt(),
-                user.getUpdatedAt(), mapToRoleDto(user.getRoles()));
+        return new UserDto(user.getUsername(), user.getCreatedAt(), user.getUpdatedAt());
     }
 
     private Set<RoleDto> mapToRoleDto(Set<Role> roles) {
