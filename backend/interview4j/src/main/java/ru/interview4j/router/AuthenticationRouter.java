@@ -19,6 +19,8 @@ public class AuthenticationRouter {
 
     private final AuthenticationHandler authHandler;
 
+    private final static String API_AUTH = "/api/auth";
+
     @Autowired
     public AuthenticationRouter(AuthenticationHandler authHandler) {
         this.authHandler = authHandler;
@@ -26,7 +28,8 @@ public class AuthenticationRouter {
 
     @Bean
     public RouterFunction<ServerResponse> authRoutes() {
-        return route(POST("/api/auth/login"), authHandler::login);
+        return route(POST(API_AUTH + "/login"), authHandler::login)
+                .andRoute(POST(API_AUTH + "/register"), authHandler::register);
     }
 
 }
