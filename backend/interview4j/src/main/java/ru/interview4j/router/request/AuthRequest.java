@@ -4,6 +4,6 @@ package ru.interview4j.router.request;
  * Time: 1:58 PM
  * */
 
-public record LoginRequest(String username, String password) {
+public record AuthRequest(String username, String password) {
 
 }
