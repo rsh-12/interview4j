@@ -7,6 +7,7 @@ package ru.interview4j.handler;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -18,11 +19,10 @@ import ru.interview4j.service.UserService;
 
 import java.util.Map;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
-import static org.springframework.web.reactive.function.server.ServerResponse.*;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+import static org.springframework.web.reactive.function.server.ServerResponse.status;
 
 @Component
 public class AuthenticationHandler {
@@ -50,16 +50,12 @@ public class AuthenticationHandler {
     public Mono<ServerResponse> register(ServerRequest request) {
         Mono<AuthRequest> registerRequest = request.bodyToMono(AuthRequest.class);
 
-        Mono<ServerResponse> success = ok().contentType(APPLICATION_JSON)
+        return ok().contentType(MediaType.APPLICATION_JSON)
                 .body(fromPublisher(registerRequest.flatMap(candidate -> {
                     User user = new User(candidate.username(), candidate.password());
                     return userService.register(user);
-                }), User.class));
-
-        return registerRequest.flatMap(candidate ->
-                userService.existsByUsername(candidate.username())
-                        .flatMap(userExist -> userExist ? unprocessableEntity().build() : success)
-        );
+                }), User.class))
+                .switchIfEmpty(ServerResponse.badRequest().build());
     }
 
     private Map<String, String> generateResponse(User user) {
