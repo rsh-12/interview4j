@@ -1,4 +1,4 @@
-package ru.interview4j.config.router;
+package ru.interview4j.router;
 /*
  * Date: 25.07.2021
  * Time: 12:15 AM
@@ -27,7 +27,7 @@ public class UserRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction() {
+    public RouterFunction<ServerResponse> userRoutes() {
         return route(GET("/api/users/{id}").and(accept(APPLICATION_JSON)),
                 userHandler::getUserById);
     }

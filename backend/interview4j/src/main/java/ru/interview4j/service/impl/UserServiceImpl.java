@@ -7,6 +7,7 @@ package ru.interview4j.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<UserDetails> findByUsername(String username) {
         Mono<User> userMono = userRepository.findByUsername(username);
-        Flux<UserDto> userFlux = fetchRoles(userMono);
+        Flux<User> userFlux = fetchUserRoles(userMono);
 
         return Mono.from(userFlux).cast(UserDetails.class);
     }
@@ -50,6 +51,19 @@ public class UserServiceImpl implements UserService {
         return Mono.from(userDtoFlux).log();
     }
 
+    @Transactional
+    @Override
+    public Mono<User> register(User user) {
+        return userRepository.save(user)
+                .doOnSuccess(savedUser -> roleService.addRoleUser(user.getId()).subscribe())
+                .onErrorResume(e -> e instanceof Exception, e -> Mono.empty());
+    }
+
+    @Override
+    public Mono<Boolean> existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
     private Flux<UserDto> fetchRoles(Mono<User> userMono) {
         return userMono.log()
                 .flatMapMany(user -> roleService.findUserRoles(user.getId())
@@ -59,6 +73,16 @@ public class UserServiceImpl implements UserService {
                             return user;
                         })
                         .map(this::mapToUserDto)).subscribeOn(Schedulers.parallel());
+    }
+
+    private Flux<User> fetchUserRoles(Mono<User> userMono) {
+        return userMono.log()
+                .flatMapMany(user -> roleService.findUserRoles(user.getId())
+                        .collect(toSet())
+                        .map(roles -> {
+                            user.setRoles(roles);
+                            return user;
+                        }));
     }
 
     private UserDto mapToUserDto(User user) {
