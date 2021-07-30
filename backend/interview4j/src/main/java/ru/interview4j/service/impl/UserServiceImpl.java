@@ -16,6 +16,7 @@ import ru.interview4j.domain.User;
 import ru.interview4j.dto.RoleDto;
 import ru.interview4j.dto.UserDto;
 import ru.interview4j.repository.UserRepository;
+import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.RoleService;
 import ru.interview4j.service.UserService;
 
@@ -53,7 +54,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Mono<User> register(User user) {
+    public Mono<User> register(AuthRequest credentials) {
+        User user = new User(credentials.username(), credentials.password());
         return userRepository.save(user)
                 .doOnSuccess(savedUser -> roleService.addRoleUser(user.getId()).subscribe())
                 .onErrorResume(e -> e instanceof Exception, e -> Mono.empty());
