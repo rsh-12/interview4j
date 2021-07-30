@@ -47,7 +47,7 @@ public class AuthenticationHandler {
     }
 
 
-    public Mono<ServerResponse> register(ServerRequest request) {
+    public @NonNull Mono<ServerResponse> register(ServerRequest request) {
         Mono<AuthRequest> registerRequest = request.bodyToMono(AuthRequest.class);
 
         return ok().contentType(MediaType.APPLICATION_JSON)
