@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -27,26 +26,6 @@ public class UserTest {
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
     }
-
-    @Test
-    public void getUsername_ShouldReturnUsername() {
-        assertEquals("username", user.getUsername());
-    }
-
-    @Test
-    public void getPassword_ShouldReturnPassword() {
-        assertEquals("password", user.getPassword());
-    }
-
-/*    @Test
-    public void getCreatedAt_ShouldReturnCreatedAt() {
-        assertEquals(new Date().toString(), user.getCreatedAt().toString());
-    }
-
-    @Test
-    public void getUpdatedAt_ShouldReturnUpdatedAt() {
-        assertEquals(LocalDateTime.now(), user.getUpdatedAt());
-    }*/
 
     @Test
     public void equals_ShouldBeEqual() {
@@ -79,12 +58,5 @@ public class UserTest {
         assertTrue(user.equals(newUser) && newUser.equals(user));
         assertEquals(user.hashCode(), newUser.hashCode());
     }
-
-    /*@Test
-    public void toString_ShouldBeEqual() {
-        String toStr = String.format("User(id=%s, username=%s, password=%s, createdAt=%s, updatedAt=%s)",
-                user.getId(), user.getUsername(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
-        assertEquals(toStr, user.toString());
-    }*/
 
 }
