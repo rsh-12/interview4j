@@ -207,6 +207,7 @@
                         <exclude>ru/interview4j/Interview4jApplication.class</exclude>
                         <exclude>ru/interview4j/validation/**/*</exclude>
                         <exclude>ru/interview4j/config/**/*</exclude>
+                        <exclude>ru/interview4j/dto/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
