@@ -30,7 +30,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class UserRouterTest {
 
     @Autowired
-    private WebTestClient testClient;
+    private WebTestClient webClient;
 
     @MockBean
     private UserRepository userRepository;
@@ -51,7 +51,7 @@ public class UserRouterTest {
         given(roleRepository.findRolesByUserId(anyLong())).willReturn(Flux.just(role));
         given(userRepository.findById(anyLong())).willReturn(Mono.just(user));
 
-        testClient.get().uri("/api/users/1")
+        webClient.get().uri("/api/users/1")
                 .accept(APPLICATION_JSON).exchange()
                 .expectStatus().isOk();
     }
