@@ -25,14 +25,6 @@ public class QuestionRatingTest {
     }
 
     @Test
-    public void getters() {
-        assertEquals(10, rating.getNegativeAnswers());
-        assertEquals(5, rating.getPositiveAnswers());
-        assertEquals(1L, rating.getUserId());
-        assertEquals(1L, rating.getQuestionId());
-    }
-
-    @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
         QuestionRating questionRating = new QuestionRating.QuestionRatingBuilder()
                 .setUserId(1L).setQuestionId(1L)
