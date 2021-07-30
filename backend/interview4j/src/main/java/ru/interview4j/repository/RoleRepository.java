@@ -16,6 +16,8 @@ public interface RoleRepository extends ReactiveCrudRepository<Role, Long> {
 
     Mono<Role> findRoleByName(ERole name);
 
+    Mono<Boolean> existsByName(ERole name);
+
     @Modifying
     @Query("insert into user_role(user_id, role_id) values($1, $2)")
     Mono<Void> saveUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
