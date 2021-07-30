@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @RunWith(SpringRunner.class)
@@ -30,7 +31,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class UserRouterTest {
 
     @Autowired
-    private WebTestClient testClient;
+    private WebTestClient webClient;
 
     @MockBean
     private UserRepository userRepository;
@@ -40,20 +41,19 @@ public class UserRouterTest {
 
     @Test
     public void findUserById() {
-        User user = new User("username", "password");
-        user.setId(1L);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
+        User user = mock(User.class);
+        Role role = mock(Role.class);
 
-        Role role = new Role(ERole.ROLE_USER);
-        role.setId(1L);
+        given(user.getUsername()).willReturn("john");
 
         given(roleRepository.findRolesByUserId(anyLong())).willReturn(Flux.just(role));
         given(userRepository.findById(anyLong())).willReturn(Mono.just(user));
 
-        testClient.get().uri("/api/users/1")
+        webClient.get().uri("/api/users/1")
                 .accept(APPLICATION_JSON).exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("username").exists();
     }
 
 }

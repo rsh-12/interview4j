@@ -5,8 +5,7 @@ package ru.interview4j.dto;
  * */
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
-public record UserDto(String username, LocalDateTime createdAt, LocalDateTime updatedAt, Set<RoleDto> roles) {
+public record UserDto(String username, LocalDateTime createdAt, LocalDateTime updatedAt) {
 
 }
