@@ -1,14 +1,18 @@
 package ru.interview4j.domain;
 
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 /**
@@ -36,10 +40,10 @@ public class Question {
     private String body;
 
     @CreatedDate
-    private Date createdAt = new Date();
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private Date updatedAt = new Date();
+    private LocalDateTime updatedAt;
 
     @NonNull
     private Long sectionId;
