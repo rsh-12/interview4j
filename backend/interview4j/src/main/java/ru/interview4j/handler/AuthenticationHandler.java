@@ -9,13 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
 import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.JwtService;
 import ru.interview4j.service.UserService;
+import ru.interview4j.validation.CredentialsValidator;
 
 import java.util.Map;
 
@@ -26,6 +30,8 @@ import static org.springframework.web.reactive.function.server.ServerResponse.st
 
 @Component
 public class AuthenticationHandler {
+
+    private final CredentialsValidator validator = new CredentialsValidator();
 
     private final UserService userService;
     private final JwtService jwtService;
@@ -48,14 +54,18 @@ public class AuthenticationHandler {
 
 
     public @NonNull Mono<ServerResponse> register(ServerRequest request) {
-        Mono<AuthRequest> registerRequest = request.bodyToMono(AuthRequest.class);
+        Mono<AuthRequest> credentials = request.bodyToMono(AuthRequest.class).doOnNext(this::validate);
+        return ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(fromPublisher(credentials.flatMap(userService::register), User.class));
+    }
 
-        return ok().contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(registerRequest.flatMap(candidate -> {
-                    User user = new User(candidate.username(), candidate.password());
-                    return userService.register(user);
-                }), User.class))
-                .switchIfEmpty(ServerResponse.badRequest().build());
+    private void validate(AuthRequest credentials) {
+        Errors errors = new BeanPropertyBindingResult(credentials, "credentials");
+        validator.validate(credentials, errors);
+        if (errors.hasErrors()) {
+            throw new ServerWebInputException(errors.toString());
+        }
     }
 
     private Map<String, String> generateResponse(User user) {
