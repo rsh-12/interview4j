@@ -35,7 +35,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<UserDetails> findByUsername(String username) {
         Mono<User> userMono = userRepository.findByUsername(username);
-        Flux<User> userFlux = fetchUserRoles(userMono);
+        Flux<User> userFlux = fetchUserRoles(userMono)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("User not found")));
 
         return Mono.from(userFlux).cast(UserDetails.class);
     }
