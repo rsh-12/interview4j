@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     private Flux<User> fetchUserRoles(Mono<User> userMono) {
         return userMono.log()
-                .flatMapMany(user -> roleService.findUserRoles(user.getId())
+                .flatMapMany(user -> roleService.findUserRolesById(user.getId())
                         .switchIfEmpty(Mono.error(() ->
                                 new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Roles not found")))
                         .collect(toSet())
