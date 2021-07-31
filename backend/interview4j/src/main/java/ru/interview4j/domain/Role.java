@@ -4,30 +4,23 @@ package ru.interview4j.domain;
  * Time: 10:46 AM
  * */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.security.core.GrantedAuthority;
 
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Table("role")
-public class Role implements GrantedAuthority {
+public class Role {
 
     @Id
     private Long id;
 
-    @JsonIgnore
     @NonNull
     private ERole name;
 
-    @Override
-    public String getAuthority() {
-        return name.name();
-    }
 }
