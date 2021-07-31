@@ -139,6 +139,12 @@
             <version>0.11.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.9</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -199,6 +205,9 @@
                 <configuration>
                     <excludes>
                         <exclude>ru/interview4j/Interview4jApplication.class</exclude>
+                        <exclude>ru/interview4j/validation/**/*</exclude>
+                        <exclude>ru/interview4j/config/**/*</exclude>
+                        <exclude>ru/interview4j/dto/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
