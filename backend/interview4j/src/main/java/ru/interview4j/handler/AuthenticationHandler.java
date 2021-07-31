@@ -22,7 +22,6 @@ import ru.interview4j.service.JwtService;
 import ru.interview4j.service.UserService;
 import ru.interview4j.validation.CredentialsValidator;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
@@ -60,13 +59,7 @@ public class AuthenticationHandler {
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(fromPublisher(credentials.flatMap(userService::register)
-                        .map(this::mapToUserDto), UserDto.class));
-    }
-
-    private UserDto mapToUserDto(User user) {
-        return new UserDto(user.getUsername(),
-                user.getCreatedAt().truncatedTo(ChronoUnit.SECONDS),
-                user.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS));
+                        .map(userService::mapToUserDto), UserDto.class));
     }
 
     private void validate(AuthRequest credentials) {
