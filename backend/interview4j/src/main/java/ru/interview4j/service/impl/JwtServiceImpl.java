@@ -40,7 +40,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public boolean validateAccessToken(String accessToken) {
         return getClaimsFromJwt(accessToken)
-                .getExpiration().toInstant().isBefore(Instant.now());
+                .getExpiration().toInstant().isAfter(Instant.now());
     }
 
     @Override
