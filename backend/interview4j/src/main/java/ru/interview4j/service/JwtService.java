@@ -1,10 +1,9 @@
 package ru.interview4j.service;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ru.interview4j.domain.User;
-import ru.interview4j.dto.RoleDto;
 
 import java.util.List;
-import java.util.Set;
 
 public interface JwtService {
 
@@ -12,7 +11,7 @@ public interface JwtService {
 
     boolean validateAccessToken(String accessToken);
 
-    Set<RoleDto> getRoles(String accessToken);
+    List<SimpleGrantedAuthority> getAuthorities(String accessToken);
 
     String buildAccessToken(User user);
 }
