@@ -10,18 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import ru.interview4j.domain.Role;
 import ru.interview4j.domain.User;
-import ru.interview4j.dto.RoleDto;
 import ru.interview4j.dto.UserDto;
 import ru.interview4j.exception.CustomException;
 import ru.interview4j.repository.UserRepository;
 import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.RoleService;
 import ru.interview4j.service.UserService;
-
-import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -46,11 +41,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<UserDto> findUserById(Long userId) {
-        Mono<User> userMono = userRepository.findById(userId);
-        Flux<UserDto> userDtoFlux = fetchRoles(userMono);
-
-        return Mono.from(userDtoFlux).log();
+    public Mono<User> findUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
     @Transactional
@@ -67,15 +59,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByUsername(username);
     }
 
-    private Flux<UserDto> fetchRoles(Mono<User> userMono) {
-        return userMono.log()
-                .flatMapMany(user -> roleService.findUserRoles(user.getId())
-                        .collect(toSet())
-                        .map(roles -> {
-                            user.setRoles(roles);
-                            return user;
-                        })
-                        .map(this::mapToUserDto)).subscribeOn(Schedulers.parallel());
+    @Override
+    public UserDto mapToUserDto(User user) {
+        return new UserDto(user.getUsername(), user.getCreatedAt(), user.getUpdatedAt());
     }
 
     private Flux<User> fetchUserRoles(Mono<User> userMono) {
@@ -86,16 +72,6 @@ public class UserServiceImpl implements UserService {
                             user.setRoles(roles);
                             return user;
                         }));
-    }
-
-    private UserDto mapToUserDto(User user) {
-        return new UserDto(user.getUsername(), user.getCreatedAt(), user.getUpdatedAt());
-    }
-
-    private Set<RoleDto> mapToRoleDto(Set<Role> roles) {
-        return roles.stream()
-                .map(role -> new RoleDto(role.getName()))
-                .collect(toSet());
     }
 
 }

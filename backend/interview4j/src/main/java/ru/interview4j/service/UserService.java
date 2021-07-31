@@ -8,10 +8,11 @@ import ru.interview4j.router.request.AuthRequest;
 
 public interface UserService extends ReactiveUserDetailsService {
 
-    Mono<UserDto> findUserById(Long userId);
+    Mono<User> findUserById(Long userId);
 
     Mono<User> register(AuthRequest credentials);
 
     Mono<Boolean> existsByUsername(String username);
 
+    UserDto mapToUserDto(User user);
 }
