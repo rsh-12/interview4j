@@ -16,11 +16,13 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
+import ru.interview4j.dto.UserDto;
 import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.JwtService;
 import ru.interview4j.service.UserService;
 import ru.interview4j.validation.CredentialsValidator;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
@@ -57,7 +59,14 @@ public class AuthenticationHandler {
         Mono<AuthRequest> credentials = request.bodyToMono(AuthRequest.class).doOnNext(this::validate);
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(credentials.flatMap(userService::register), User.class));
+                .body(fromPublisher(credentials.flatMap(userService::register)
+                        .map(this::mapToUserDto), UserDto.class));
+    }
+
+    private UserDto mapToUserDto(User user) {
+        return new UserDto(user.getUsername(),
+                user.getCreatedAt().truncatedTo(ChronoUnit.SECONDS),
+                user.getUpdatedAt().truncatedTo(ChronoUnit.SECONDS));
     }
 
     private void validate(AuthRequest credentials) {

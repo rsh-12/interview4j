@@ -21,12 +21,6 @@ public class RoleTest {
     }
 
     @Test
-    public void getters() {
-        assertEquals(1L, role.getId());
-        assertEquals(ERole.ROLE_USER, role.getName());
-    }
-
-    @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
         Role role2 = new Role(ERole.ROLE_USER);
         role2.setId(1L);

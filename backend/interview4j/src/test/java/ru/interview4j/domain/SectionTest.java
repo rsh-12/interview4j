@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SectionTest {
 
@@ -25,12 +27,43 @@ public class SectionTest {
     }
 
     @Test
-    public void getters_ShouldReturnCorrectData() {
-        assertEquals(1L, section.getId());
-        assertEquals(1L, section.getUserId());
-        assertEquals("Title", section.getTitle());
-//        assertEquals(new Date().toString(), section.getCreatedAt().toString());
-//        assertEquals(new Date().toString(), section.getUpdatedAt().toString());
+    public void equals_ShouldBeEqual() {
+        final Section section2 = new Section();
+        section2.setId(1L);
+        section2.setTitle("Title");
+
+        assertEquals(this.section, section2);
+    }
+
+    @Test
+    public void equals_ShouldNotBeEqual() {
+        final Section section2 = new Section();
+        section2.setId(1L);
+        section2.setTitle("title");
+
+        assertNotEquals(section, section2);
+    }
+
+    @Test
+    public void equals_SameObjects_ShouldBeEqual() {
+        assertEquals(section, section);
+    }
+
+
+    @Test
+    public void equals_Null_ShouldNotBeEqual() {
+        assertFalse(section.equals(null));
+    }
+
+
+    @Test
+    public void hashcode_Symmetric_ShouldBeEqual() {
+        final Section section2 = new Section();
+        section2.setId(1L);
+        section2.setTitle("Title");
+
+        assertTrue(section.equals(section2) && section2.equals(section));
+        assertEquals(section.hashCode(), section2.hashCode());
     }
 
 }
