@@ -128,6 +128,36 @@
             <version>5.3.9</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.9</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -188,6 +218,9 @@
                 <configuration>
                     <excludes>
                         <exclude>ru/interview4j/Interview4jApplication.class</exclude>
+                        <exclude>ru/interview4j/validation/**/*</exclude>
+                        <exclude>ru/interview4j/config/**/*</exclude>
+                        <exclude>ru/interview4j/dto/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

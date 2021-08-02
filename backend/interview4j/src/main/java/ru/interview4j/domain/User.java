@@ -5,21 +5,24 @@ package ru.interview4j.domain;
  * */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 
 /**
@@ -32,7 +35,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "username"})
 @Table("usr")
-public class User {
+public class User implements UserDetails {
 
     @Id
     private Long id;
@@ -52,10 +55,42 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @Builder(setterPrefix = "set")
+    @Transient
+    Set<Role> roleSet = new HashSet<>();
+
+    @Builder
     public User(@NonNull String username, @NonNull String password) {
         this.username = username;
         this.password = password;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Transient
+    private Set<Role> roles = new HashSet<>();
 }

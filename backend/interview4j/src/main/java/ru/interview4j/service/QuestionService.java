@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.Question;
@@ -32,9 +33,27 @@ public class QuestionService {
         }
         return this.questionRepository.findBySpecificTitle(title);
     }
+
     //Get all question from db with body field will not null
     public Flux<Question> getAll() {
         return  this.questionRepository.findAll();
 
     }
+    //Delete question by id
+    public Mono<Void> removeQuestion(Long id){
+        return questionRepository.deleteById(id)
+                .switchIfEmpty(Mono.empty());
+    }
+    //Update question by its id
+    @Transactional(readOnly = true)
+    public Mono<Void> update(Question q){
+     return   questionRepository.findById(q.getId())
+                .flatMap(questionRepository::save)
+                .then();
+
+
+    }
+
+
+
 }

@@ -10,13 +10,12 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.security.core.GrantedAuthority;
 
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Table("role")
-public class Role implements GrantedAuthority {
+public class Role {
 
     @Id
     private Long id;
@@ -24,8 +23,4 @@ public class Role implements GrantedAuthority {
     @NonNull
     private ERole name;
 
-    @Override
-    public String getAuthority() {
-        return name.name();
-    }
 }
