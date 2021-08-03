@@ -19,8 +19,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -43,13 +41,9 @@ public class User implements UserDetails {
     @Id
     private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 20)
     private String username;
 
     @JsonIgnore
-    @NotBlank
-    @Size(min = 8, max = 128)
     private String password;
 
     @CreatedDate
