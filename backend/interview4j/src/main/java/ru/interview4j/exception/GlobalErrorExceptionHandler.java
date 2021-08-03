@@ -11,6 +11,7 @@ import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -19,7 +20,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
@@ -45,10 +45,10 @@ public class GlobalErrorExceptionHandler extends AbstractErrorWebExceptionHandle
 
     private @NonNull Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         Map<String, Object> errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults());
-        int status = (int) Optional.ofNullable(errorPropertiesMap.get("status")).orElse(500);
 
+        int status = (int) errorPropertiesMap.get("status");
         return ServerResponse
-                .status(status)
+                .status(HttpStatus.valueOf(status))
                 .contentType(APPLICATION_JSON)
                 .body(fromValue(errorPropertiesMap));
     }

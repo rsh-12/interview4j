@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 import ru.interview4j.service.JwtService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthenticationManager implements ReactiveAuthenticationManager {
@@ -39,10 +38,7 @@ public class CustomAuthenticationManager implements ReactiveAuthenticationManage
         }
 
         if (username != null && jwtService.validateAccessToken(accessToken)) {
-            List<SimpleGrantedAuthority> authorities = jwtService.getRoles(accessToken).stream()
-                    .map(roleDto -> new SimpleGrantedAuthority(roleDto.authority().name()))
-                    .collect(Collectors.toList());
-
+            List<SimpleGrantedAuthority> authorities = jwtService.getAuthorities(accessToken);
             var auth = new UsernamePasswordAuthenticationToken(username, "", authorities);
             return Mono.just(auth);
         }

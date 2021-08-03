@@ -6,7 +6,7 @@ import ru.interview4j.domain.Role;
 
 public interface RoleService {
 
-    Flux<Role> findUserRoles(Long userId);
+    Flux<Role> findUserRolesById(Long userId);
 
     Mono<Void> addRoleUser(Long userId);
 }

@@ -21,8 +21,16 @@ public class CustomException extends ResponseStatusException {
         return new CustomException(HttpStatus.BAD_REQUEST, reason);
     }
 
+    public static CustomException notFound(String reason) {
+        return new CustomException(HttpStatus.NOT_FOUND, reason);
+    }
+
     public static CustomException unprocessableEntity() {
         return new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Username already in use");
+    }
+
+    public static CustomException internalServerError(String reason) {
+        return new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, reason);
     }
 
 }

@@ -14,7 +14,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 /**
@@ -34,7 +33,6 @@ public class Section {
     private Long id;
 
     @NonNull
-    @NotBlank
     private String title;
 
     @CreatedDate
