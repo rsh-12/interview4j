@@ -29,4 +29,8 @@ public class CustomException extends ResponseStatusException {
         return new CustomException(HttpStatus.UNPROCESSABLE_ENTITY, "Username already in use");
     }
 
+    public static CustomException internalServerError(String reason) {
+        return new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, reason);
+    }
+
 }

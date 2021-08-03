@@ -5,7 +5,6 @@ package ru.interview4j.service.impl;
  * */
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +67,9 @@ public class UserServiceImpl implements UserService {
 
     private Flux<User> fetchUserRoles(Mono<User> userMono) {
         return userMono.log()
-                .flatMapMany(user -> roleService.findUserRoles(user.getId())
+                .flatMapMany(user -> roleService.findUserRolesById(user.getId())
                         .switchIfEmpty(Mono.error(() ->
-                                new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Roles not found")))
+                                CustomException.internalServerError("No roles found, check database")))
                         .collect(toSet())
                         .map(roles -> {
                             user.setRoles(roles);
