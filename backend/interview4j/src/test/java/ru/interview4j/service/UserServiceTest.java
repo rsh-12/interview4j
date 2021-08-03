@@ -10,14 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import ru.interview4j.domain.User;
 import ru.interview4j.exception.CustomException;
 import ru.interview4j.repository.UserRepository;
 import ru.interview4j.service.impl.UserServiceImpl;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -38,6 +42,19 @@ public class UserServiceTest {
 
         StepVerifier.create(userDetailsMono)
                 .expectError(CustomException.class)
+                .verify();
+    }
+
+    @Test
+    public void findByUsername_RolesNotFound_ShouldThrowException() {
+        User user = mock(User.class);
+        given(userRepository.findByUsername(anyString())).willReturn(Mono.just(user));
+        given(roleService.findUserRolesById(anyLong())).willReturn(Flux.empty());
+
+        Mono<UserDetails> userDetailsMono = userService.findByUsername("username");
+
+        StepVerifier.create(userDetailsMono)
+                .expectErrorMessage("500 INTERNAL_SERVER_ERROR \"No roles found, check database\"")
                 .verify();
     }
 
