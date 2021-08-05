@@ -13,26 +13,20 @@ import ru.interview4j.dto.UserDto;
 import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.UserService;
 
-import java.time.LocalDateTime;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-public class AuthenticationRouterTest extends AbstractRouterTestClass{
+public class AuthenticationRouterTest extends AbstractRouterTestClass {
 
     @MockBean
     private UserService userService;
 
     private static User MOCK_USER;
-    private static final LocalDateTime CREATED_AT_NOW = LocalDateTime.now();
-    private static final LocalDateTime UPDATED_AT_NOW = LocalDateTime.now();
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password12345";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MOCK_USER = mock(User.class);
     }
 
