@@ -11,6 +11,7 @@ import ru.interview4j.domain.User;
 import ru.interview4j.dto.UserDto;
 import ru.interview4j.service.UserService;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -27,7 +28,7 @@ public class UserRouterTest extends AbstractRouterTestClass {
     public void findUserById_ShouldReturnUserDto() {
         User user = mock(User.class);
         given(userService.findUserById(anyLong())).willReturn(Mono.just(user));
-        given(userService.mapToUserDto(user)).willReturn(new UserDto(USERNAME, CREATED_AT_NOW, UPDATED_AT_NOW));
+        given(userService.mapToUserDto(any(User.class))).willReturn(new UserDto(USERNAME, CREATED_AT_NOW, UPDATED_AT_NOW));
 
         webClient.get().uri(API_USERS + "/1")
                 .accept(APPLICATION_JSON)
@@ -37,6 +38,16 @@ public class UserRouterTest extends AbstractRouterTestClass {
                 .jsonPath("username").exists()
                 .jsonPath("createdAt").exists()
                 .jsonPath("updatedAt").exists();
+    }
+
+    @Test
+    public void findUserById_ShouldReturnNotFound() {
+        given(userService.findUserById(anyLong())).willReturn(Mono.empty());
+
+        webClient.get().uri(API_USERS + "/1")
+                .accept(APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
 }
