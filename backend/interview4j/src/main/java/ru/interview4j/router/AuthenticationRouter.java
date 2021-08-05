@@ -11,7 +11,9 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import ru.interview4j.handler.AuthenticationHandler;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -28,8 +30,8 @@ public class AuthenticationRouter {
 
     @Bean
     public RouterFunction<ServerResponse> authRoutes() {
-        return route(POST(API_AUTH + "/login"), authHandler::login)
-                .andRoute(POST(API_AUTH + "/register"), authHandler::register);
+        return route(POST(API_AUTH + "/login").and(accept(APPLICATION_JSON)), authHandler::login)
+                .andRoute(POST(API_AUTH + "/register").and(accept(APPLICATION_JSON)), authHandler::register);
     }
 
 }
