@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
 import ru.interview4j.dto.UserDto;
+import ru.interview4j.exception.CustomException;
 import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.UserService;
 
@@ -44,6 +45,18 @@ public class AuthenticationRouterTest extends AbstractRouterTestClass {
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("username").isEqualTo(USERNAME);
+    }
+
+    @Test
+    public void register_ShouldReturnUnprocessableEntity() {
+        given(userService.register(any())).willReturn(Mono.error(CustomException::unprocessableEntity));
+
+        AuthRequest credentials = new AuthRequest(USERNAME, PASSWORD);
+        webClient.post().uri("/api/auth/register")
+                .accept(APPLICATION_JSON)
+                .body(Mono.just(credentials), AuthRequest.class)
+                .exchange()
+                .expectStatus().isEqualTo(422);
     }
 
 }
