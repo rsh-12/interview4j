@@ -31,13 +31,13 @@ public class UserHandler {
 
     public @NonNull Mono<ServerResponse> getUserById(ServerRequest request) {
         Long userId = Long.valueOf(request.pathVariable("id"));
+        Mono<User> user = userService.findUserById(userId)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("User not found")));
 
-        Mono<User> user = userService.findUserById(userId);
         return user.map(userService::mapToUserDto)
                 .flatMap(u -> ServerResponse
                         .ok().contentType(APPLICATION_JSON)
-                        .body(fromValue(u)))
-                .switchIfEmpty(Mono.error(() -> CustomException.notFound("User not found")));
+                        .body(fromValue(u)));
     }
 
 }
