@@ -17,9 +17,9 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class AuthenticationRouter {
 
-    private final AuthenticationHandler authHandler;
-
     private final static String API_AUTH = "/api/auth";
+
+    private final AuthenticationHandler authHandler;
 
     @Autowired
     public AuthenticationRouter(AuthenticationHandler authHandler) {

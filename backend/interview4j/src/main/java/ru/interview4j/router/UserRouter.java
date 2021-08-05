@@ -19,6 +19,8 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class UserRouter {
 
+    private final static String API_USERS = "/api/users";
+
     private final UserHandler userHandler;
 
     @Autowired
@@ -28,7 +30,7 @@ public class UserRouter {
 
     @Bean
     public RouterFunction<ServerResponse> userRoutes() {
-        return route(GET("/api/users/{id}").and(accept(APPLICATION_JSON)),
+        return route(GET(API_USERS + "/{id}").and(accept(APPLICATION_JSON)),
                 userHandler::getUserById);
     }
 }

@@ -15,5 +15,7 @@ public class SectionRouter {
     // delete
     // update
 
+    private final static String API_SECTIONS = "/api/sections";
+
 
 }
