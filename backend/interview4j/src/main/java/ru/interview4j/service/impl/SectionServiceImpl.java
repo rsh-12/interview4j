@@ -13,6 +13,8 @@ import ru.interview4j.dto.SectionDto;
 import ru.interview4j.repository.SectionRepository;
 import ru.interview4j.service.SectionService;
 
+import java.util.Comparator;
+
 @Service
 public class SectionServiceImpl implements SectionService {
 
@@ -38,6 +40,7 @@ public class SectionServiceImpl implements SectionService {
     @Override
     public Flux<Section> findSections(long page, long size) {
         return sectionRepository.findAll()
+                .sort(Comparator.comparing(Section::getCreatedAt))
                 .skip(page * size)
                 .take(size);
     }
