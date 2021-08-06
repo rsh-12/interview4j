@@ -9,10 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.Section;
+import ru.interview4j.dto.SectionDto;
 import ru.interview4j.exception.CustomException;
 import ru.interview4j.service.SectionService;
+
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
@@ -36,6 +40,18 @@ public class SectionHandler {
         return section.map(sectionService::mapToSectionDto)
                 .flatMap(sectionDto -> ok().contentType(APPLICATION_JSON)
                         .body(fromValue(sectionDto)));
+    }
+
+    public @NonNull Mono<ServerResponse> getSections(ServerRequest request) {
+        String pageVar = Optional.of(request.pathVariable("page")).orElse("0");
+        String sizeVar = Optional.of(request.pathVariable("size")).orElse("0");
+
+        Flux<SectionDto> sectionsFlux = sectionService.findSections(Long.parseLong(pageVar), Long.parseLong(sizeVar))
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("No sections found")))
+                .map(sectionService::mapToSectionDto);
+
+        return ok().contentType(APPLICATION_JSON)
+                .body(sectionsFlux, SectionDto.class);
     }
 
 }
