@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     public Mono<User> register(AuthRequest credentials) {
         User user = new User(credentials.username(), credentials.password());
         return userRepository.save(user)
-                .doOnSuccess(savedUser -> roleService.addRoleUser(user.getId()).subscribe())
+                .doOnSuccess(savedUser -> roleService.addRoleUser(savedUser.getId()).subscribe())
                 .onErrorResume(throwable -> Mono.error(CustomException.unprocessableEntity()));
     }
 
