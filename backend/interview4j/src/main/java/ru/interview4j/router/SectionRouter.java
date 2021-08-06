@@ -36,7 +36,8 @@ public class SectionRouter {
 
     @Bean
     public RouterFunction<ServerResponse> sectionRoutes() {
-        return route(GET(API_SECTIONS + "/{id}").and(accept(APPLICATION_JSON)), sectionHandler::getSectionById);
+        return route(GET(API_SECTIONS + "/{id}").and(accept(APPLICATION_JSON)), sectionHandler::getSectionById)
+                .andRoute(GET(API_SECTIONS).and(accept(APPLICATION_JSON)), sectionHandler::getSections);
     }
 
 
