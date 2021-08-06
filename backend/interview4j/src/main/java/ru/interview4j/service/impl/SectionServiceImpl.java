@@ -6,6 +6,7 @@ package ru.interview4j.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.Section;
 import ru.interview4j.dto.SectionDto;
@@ -32,6 +33,13 @@ public class SectionServiceImpl implements SectionService {
         return new SectionDto(section.getTitle(),
                 section.getCreatedAt(),
                 section.getUpdatedAt());
+    }
+
+    @Override
+    public Flux<Section> findSections(long page, long size) {
+        return sectionRepository.findAll()
+                .skip(page * size)
+                .take(size);
     }
 
 }

@@ -4,6 +4,7 @@ package ru.interview4j.service;
  * Time: 11:30 AM
  * */
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.Section;
 import ru.interview4j.dto.SectionDto;
@@ -13,4 +14,7 @@ public interface SectionService {
     Mono<Section> findSectionById(Long sectionId);
 
     SectionDto mapToSectionDto(Section section);
+
+    Flux<Section> findSections(long page, long size);
+
 }
