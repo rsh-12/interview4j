@@ -35,9 +35,9 @@ public class UserHandler {
                 .switchIfEmpty(Mono.error(() -> CustomException.notFound("User not found")));
 
         return user.map(userService::mapToUserDto)
-                .flatMap(u -> ServerResponse
+                .flatMap(userDto -> ServerResponse
                         .ok().contentType(APPLICATION_JSON)
-                        .body(fromValue(u)));
+                        .body(fromValue(userDto)));
     }
 
 }
