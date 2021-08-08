@@ -16,7 +16,6 @@ import javax.naming.NameNotFoundException;
 @Slf4j
 public class QuestionService {
 
-
   private   QuestionRepository questionRepository;
 
   @Autowired
