@@ -19,12 +19,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class SectionRouter {
 
-    // get one
-    // get all
-    // create
-    // delete
-    // update
-
     private final static String API_SECTIONS = "/api/sections";
 
     private final SectionHandler sectionHandler;
