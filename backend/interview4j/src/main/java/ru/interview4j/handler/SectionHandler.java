@@ -43,10 +43,10 @@ public class SectionHandler {
     }
 
     public @NonNull Mono<ServerResponse> getSections(ServerRequest request) {
-        String pageVar = Optional.of(request.pathVariable("page")).orElse("0");
-        String sizeVar = Optional.of(request.pathVariable("size")).orElse("0");
+        String page = request.queryParam("page").orElse("0");
+        String size = request.queryParam("size").orElse("20");
 
-        Flux<SectionDto> sectionsFlux = sectionService.findSections(Long.parseLong(pageVar), Long.parseLong(sizeVar))
+        Flux<SectionDto> sectionsFlux = sectionService.findSections(Long.parseLong(page), Long.parseLong(size))
                 .switchIfEmpty(Mono.error(() -> CustomException.notFound("No sections found")))
                 .map(sectionService::mapToSectionDto);
 
