@@ -1,7 +1,7 @@
 package ru.interview4j.router;
 /*
- * Date: 25.07.2021
- * Time: 12:15 AM
+ * Date: 05.08.2021
+ * Time: 10:12 AM
  * */
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import ru.interview4j.handler.UserHandler;
+import ru.interview4j.handler.SectionHandler;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
@@ -17,20 +17,22 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class UserRouter {
+public class SectionRouter {
 
-    private final static String API_USERS = "/api/users";
+    private final static String API_SECTIONS = "/api/sections";
 
-    private final UserHandler userHandler;
+    private final SectionHandler sectionHandler;
 
     @Autowired
-    public UserRouter(UserHandler userHandler) {
-        this.userHandler = userHandler;
+    public SectionRouter(SectionHandler sectionHandler) {
+        this.sectionHandler = sectionHandler;
     }
 
     @Bean
-    public RouterFunction<ServerResponse> userRoutes() {
-        return route(GET(API_USERS + "/{id}").and(accept(APPLICATION_JSON)),
-                userHandler::getUserById);
+    public RouterFunction<ServerResponse> sectionRoutes() {
+        return route(GET(API_SECTIONS + "/{id}").and(accept(APPLICATION_JSON)), sectionHandler::getSectionById)
+                .andRoute(GET(API_SECTIONS).and(accept(APPLICATION_JSON)), sectionHandler::getSections);
     }
+
+
 }

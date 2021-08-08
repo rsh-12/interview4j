@@ -5,7 +5,6 @@ package ru.interview4j.service.impl;
  * */
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +51,7 @@ public class UserServiceImpl implements UserService {
     public Mono<User> register(AuthRequest credentials) {
         User user = new User(credentials.username(), credentials.password());
         return userRepository.save(user)
-                .doOnSuccess(savedUser -> roleService.addRoleUser(user.getId()).subscribe())
+                .doOnSuccess(savedUser -> roleService.addRoleUser(savedUser.getId()).subscribe())
                 .onErrorResume(throwable -> Mono.error(CustomException.unprocessableEntity()));
     }
 
@@ -70,7 +69,7 @@ public class UserServiceImpl implements UserService {
         return userMono.log()
                 .flatMapMany(user -> roleService.findUserRolesById(user.getId())
                         .switchIfEmpty(Mono.error(() ->
-                                new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Roles not found")))
+                                CustomException.internalServerError("No roles found, check database")))
                         .collect(toSet())
                         .map(roles -> {
                             user.setRoles(roles);

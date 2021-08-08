@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.validation.constraints.NotNull;
-
 @Data
 @NoArgsConstructor
 @Table("question_rating")
@@ -24,10 +22,8 @@ public class QuestionRating {
 
     private int negativeAnswers;
 
-    @NotNull
     private Long userId;
 
-    @NotNull
     private Long questionId;
 
     @Builder(setterPrefix = "set")

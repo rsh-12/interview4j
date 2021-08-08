@@ -1,6 +1,5 @@
 package ru.interview4j.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +11,19 @@ import ru.interview4j.repository.QuestionRepository;
 
 import javax.naming.NameNotFoundException;
 
+//Created by @shele
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class QuestionService {
 
-    @Autowired
-    QuestionRepository questionRepository;
+
+  private   QuestionRepository questionRepository;
+
+  @Autowired
+  public QuestionService(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
+
 
     // it should be returned question with special title
     public Mono<Question> getByTitle(String title) {
