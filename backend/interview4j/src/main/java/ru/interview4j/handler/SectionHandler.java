@@ -16,8 +16,6 @@ import ru.interview4j.dto.SectionDto;
 import ru.interview4j.exception.CustomException;
 import ru.interview4j.service.SectionService;
 
-import java.util.Optional;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
