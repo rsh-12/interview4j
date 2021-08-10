@@ -5,6 +5,7 @@ package ru.interview4j.handler;
  * */
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -18,6 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
+@Slf4j
 @Component
 public class QuestionHandler {
 
@@ -29,8 +31,11 @@ public class QuestionHandler {
     }
 
     public @NonNull Mono<ServerResponse> getQuestionById(ServerRequest request) {
+        Long sectionId = Long.valueOf(request.pathVariable("sectionId"));
         Long questionId = Long.valueOf(request.pathVariable("id"));
-        Mono<QuestionDto> question = questionService.findQuestionById(questionId)
+        log.debug("sectionId={}, questionId={}", sectionId, questionId);
+
+        Mono<QuestionDto> question = questionService.findQuestionBySectionAndId(sectionId, questionId)
                 .map(CustomMapper::mapToDto);
 
         return question.flatMap(questionDto -> ok()
