@@ -9,6 +9,6 @@ import ru.interview4j.domain.Question;
 @Repository
 public interface QuestionRepository extends ReactiveCrudRepository<Question, Long> {
 
-    @Query(value = "select title from question where title =1$")
+    @Query(value = "select title from question where title =:title")
     Mono<Question> findBySpecificTitle(String title);
 }
