@@ -20,6 +20,7 @@ import ru.interview4j.dto.UserDto;
 import ru.interview4j.router.request.AuthRequest;
 import ru.interview4j.service.JwtService;
 import ru.interview4j.service.UserService;
+import ru.interview4j.util.CustomMapper;
 import ru.interview4j.validation.CredentialsValidator;
 
 import java.util.Map;
@@ -59,7 +60,7 @@ public class AuthenticationHandler {
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(fromPublisher(credentials.flatMap(userService::register)
-                        .map(userService::mapToUserDto), UserDto.class));
+                        .map(CustomMapper::mapToDto), UserDto.class));
     }
 
     private void validate(AuthRequest credentials) {
