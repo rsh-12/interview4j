@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.Section;
-import ru.interview4j.dto.SectionDto;
+import ru.interview4j.exception.CustomException;
 import ru.interview4j.repository.SectionRepository;
 import ru.interview4j.service.SectionService;
 
@@ -27,14 +27,8 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public Mono<Section> findSectionById(Long sectionId) {
-        return sectionRepository.findById(sectionId);
-    }
-
-    @Override
-    public SectionDto mapToSectionDto(Section section) {
-        return new SectionDto(section.getTitle(),
-                section.getCreatedAt(),
-                section.getUpdatedAt());
+        return sectionRepository.findById(sectionId)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("Section not found")));
     }
 
     @Override
@@ -42,7 +36,8 @@ public class SectionServiceImpl implements SectionService {
         return sectionRepository.findAll()
                 .sort(Comparator.comparing(Section::getCreatedAt))
                 .skip(page * size)
-                .take(size);
+                .take(size)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("No sections found")));
     }
 
 }

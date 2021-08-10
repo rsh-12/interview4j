@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
-import ru.interview4j.dto.UserDto;
 import ru.interview4j.exception.CustomException;
 import ru.interview4j.repository.UserRepository;
 import ru.interview4j.router.request.AuthRequest;
@@ -43,7 +42,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> findUserById(Long userId) {
-        return userRepository.findById(userId);
+        return userRepository.findById(userId)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("User not found")));
     }
 
     @Transactional
@@ -53,16 +53,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user)
                 .doOnSuccess(savedUser -> roleService.addRoleUser(savedUser.getId()).subscribe())
                 .onErrorResume(throwable -> Mono.error(CustomException.unprocessableEntity()));
-    }
-
-    @Override
-    public Mono<Boolean> existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    @Override
-    public UserDto mapToUserDto(User user) {
-        return new UserDto(user.getUsername(), user.getCreatedAt(), user.getUpdatedAt());
     }
 
     private Flux<User> fetchUserRoles(Mono<User> userMono) {
