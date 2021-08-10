@@ -1,5 +1,6 @@
 package ru.interview4j.service.impl;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,13 @@ public class QuestionServiceImpl implements QuestionServ {
 
     private QuestionRepository questionRepository;
 
+
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
     @Override
+
     public Mono<Question> getTitle(String title) {
         log.info("check if title for null");
         if (title == null) {
@@ -63,4 +66,11 @@ public class QuestionServiceImpl implements QuestionServ {
                 .flatMap(questionRepository::save)
                 .log("Updated question is over");
     }
+
+    public Mono<Question> getSectionId(Question question){
+        return questionRepository.findBySectionIdAndId(question.getSectionId(), question.getId())
+                .switchIfEmpty(Mono.error(new NameNotFoundException("not specify item ids")));
+    }
+
+
 }
