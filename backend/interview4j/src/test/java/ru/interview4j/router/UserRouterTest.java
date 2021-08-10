@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
+import ru.interview4j.exception.CustomException;
 import ru.interview4j.service.UserService;
 
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -41,7 +42,7 @@ public class UserRouterTest extends AbstractRouterTestClass {
 
     @Test
     public void findUserById_ShouldReturnNotFound() {
-        given(userService.findUserById(anyLong())).willReturn(Mono.empty());
+        given(userService.findUserById(anyLong())).willThrow(CustomException.notFound("User not found"));
 
         webClient.get().uri(API_USERS + "/1")
                 .accept(APPLICATION_JSON)
