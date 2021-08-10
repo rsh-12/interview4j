@@ -28,6 +28,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Mono<Question> findQuestionBySectionAndId(Long sectionId, Long questionId) {
+        return questionRepository.findBySectionIdAndId(sectionId, questionId)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("Question not found")));
+    }
+
+    @Override
     public Flux<Question> findQuestions(long page, long size) {
         return null;
     }
