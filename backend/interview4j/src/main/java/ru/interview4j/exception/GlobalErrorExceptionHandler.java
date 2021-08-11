@@ -46,7 +46,13 @@ public class GlobalErrorExceptionHandler extends AbstractErrorWebExceptionHandle
     private @NonNull Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         Map<String, Object> errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults());
 
-        int status = (int) errorPropertiesMap.get("status");
+        int status;
+        try {
+            status = (int) errorPropertiesMap.get("status");
+        } catch (RuntimeException e) {
+            System.out.println("Status parsing error: " + e.getMessage());
+            status = 500;
+        }
         return ServerResponse
                 .status(HttpStatus.valueOf(status))
                 .contentType(APPLICATION_JSON)
