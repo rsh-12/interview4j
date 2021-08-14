@@ -10,7 +10,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.interview4j.router.request.AuthRequest;
 
-public class CredentialsValidator implements Validator {
+public record CredentialsValidator() implements Validator {
 
     @Override
     public boolean supports(@NonNull Class<?> aClass) {
@@ -29,4 +29,5 @@ public class CredentialsValidator implements Validator {
             errors.rejectValue("password", "min.length");
         }
     }
+
 }
