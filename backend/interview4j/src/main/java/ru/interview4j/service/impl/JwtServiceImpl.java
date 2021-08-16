@@ -40,6 +40,7 @@ public class JwtServiceImpl implements JwtService {
                 .getExpiration().toInstant().isAfter(Instant.now());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<SimpleGrantedAuthority> getAuthorities(String accessToken) {
         Claims claims = getClaimsFromJwt(accessToken);
