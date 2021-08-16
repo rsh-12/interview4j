@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class QuestionRatingTest {
+public class QuestionWithRatingTest {
 
-    private QuestionRating rating;
+    private QuestionWithRating rating;
 
     @BeforeEach
     void setUp() {
-        rating = new QuestionRating.QuestionRatingBuilder()
+        rating = QuestionWithRating.builder()
                 .setNegativeAnswers(10)
                 .setPositiveAnswers(5)
                 .setUserId(1L)
@@ -26,7 +26,7 @@ public class QuestionRatingTest {
 
     @Test
     public void hashcode_Symmetric_ShouldBeEqual() {
-        QuestionRating questionRating = new QuestionRating.QuestionRatingBuilder()
+        QuestionWithRating questionRating = QuestionWithRating.builder()
                 .setUserId(1L).setQuestionId(1L)
                 .setPositiveAnswers(5).setNegativeAnswers(10).build();
         assertTrue(rating.equals(questionRating) && questionRating.equals(rating));

@@ -7,6 +7,8 @@ import ru.interview4j.dto.QuestionDto;
 import ru.interview4j.dto.SectionDto;
 import ru.interview4j.dto.UserDto;
 
+import java.util.function.Function;
+
 public record CustomMapper() {
 
     public static SectionDto mapToDto(Section section) {
@@ -24,6 +26,11 @@ public record CustomMapper() {
                 question.getBody(),
                 question.getCreatedAt(),
                 question.getUpdatedAt());
+    }
+
+    /* Mapping with custom logic */
+    <T, R> R mapToAny(T t, Function<T, R> f) {
+        return f.apply(t);
     }
 
 }
