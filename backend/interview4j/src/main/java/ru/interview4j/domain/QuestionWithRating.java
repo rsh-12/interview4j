@@ -13,7 +13,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @Table("question_rating")
-public class QuestionRating {
+public class QuestionWithRating {
 
     @Id
     private Long id;
@@ -27,7 +27,7 @@ public class QuestionRating {
     private Long questionId;
 
     @Builder(setterPrefix = "set")
-    private QuestionRating(int positiveAnswers, int negativeAnswers, Long userId, Long questionId) {
+    private QuestionWithRating(int positiveAnswers, int negativeAnswers, Long userId, Long questionId) {
         this.positiveAnswers = positiveAnswers;
         this.negativeAnswers = negativeAnswers;
         this.userId = userId;

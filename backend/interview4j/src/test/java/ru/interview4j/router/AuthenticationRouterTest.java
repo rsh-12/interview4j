@@ -4,9 +4,8 @@ package ru.interview4j.router;
  * Time: 10:04 AM
  * */
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
@@ -24,17 +23,21 @@ public class AuthenticationRouterTest extends AbstractRouterTestClass {
     @MockBean
     private UserService userService;
 
-    private static User MOCK_USER;
+    private static User mockUser;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        MOCK_USER = mock(User.class);
+        mockUser = mock(User.class);
+        given(mockUser.getId()).willReturn(1L);
+        given(mockUser.getUsername()).willReturn(USERNAME);
+        given(mockUser.getPassword()).willReturn(PASSWORD);
+        given(mockUser.getCreatedAt()).willReturn(CREATED_AT_NOW);
+        given(mockUser.getUpdatedAt()).willReturn(UPDATED_AT_NOW);
     }
 
-    @Disabled
     @Test
     public void register_ShouldReturnUserDto() {
-        given(userService.register(any())).willReturn(Mono.just(MOCK_USER));
+        given(userService.register(any())).willReturn(Mono.just(mockUser));
 
         AuthRequest credentials = new AuthRequest(USERNAME, PASSWORD);
         webClient.post().uri("/api/auth/register")

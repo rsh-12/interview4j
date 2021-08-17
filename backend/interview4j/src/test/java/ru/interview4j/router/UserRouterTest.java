@@ -4,7 +4,6 @@ package ru.interview4j.router;
  * Time: 3:42 PM
  * */
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import reactor.core.publisher.Mono;
@@ -24,10 +23,12 @@ public class UserRouterTest extends AbstractRouterTestClass {
     @MockBean
     private UserService userService;
 
-    @Disabled
     @Test
     public void findUserById_ShouldReturnUserDto() {
         User user = mock(User.class);
+        given(user.getUsername()).willReturn("username");
+        given(user.getCreatedAt()).willReturn(CREATED_AT_NOW);
+        given(user.getUpdatedAt()).willReturn(UPDATED_AT_NOW);
         given(userService.findUserById(anyLong())).willReturn(Mono.just(user));
 
         webClient.get().uri(API_USERS + "/1")
