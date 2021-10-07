@@ -1,4 +1,4 @@
-package ru.interview4j.handler;
+package ru.interview4j.rest.handler;
 /*
  * Date: 28.07.2021
  * Time: 12:05 PM
@@ -17,7 +17,7 @@ import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
 import ru.interview4j.dto.UserDto;
-import ru.interview4j.router.request.AuthRequest;
+import ru.interview4j.rest.router.request.AuthRequest;
 import ru.interview4j.service.JwtService;
 import ru.interview4j.service.UserService;
 import ru.interview4j.util.CustomMapper;
