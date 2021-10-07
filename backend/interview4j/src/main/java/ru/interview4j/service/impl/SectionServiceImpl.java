@@ -27,8 +27,7 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public Mono<Section> findSectionById(Long sectionId) {
-        return sectionRepository.findById(sectionId)
-                .switchIfEmpty(Mono.error(() -> CustomException.notFound("Section not found")));
+        return sectionRepository.findById(sectionId);
     }
 
     @Override
