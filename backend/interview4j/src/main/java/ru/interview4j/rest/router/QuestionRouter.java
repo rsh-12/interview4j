@@ -1,4 +1,4 @@
-package ru.interview4j.router;
+package ru.interview4j.rest.router;
 /*
  * Date: 08.08.2021
  * Time: 12:49 PM
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import ru.interview4j.handler.QuestionHandler;
+import ru.interview4j.rest.handler.QuestionHandler;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;

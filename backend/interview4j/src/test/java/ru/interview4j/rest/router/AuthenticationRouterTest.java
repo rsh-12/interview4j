@@ -1,4 +1,4 @@
-package ru.interview4j.router;
+package ru.interview4j.rest.router;
 /*
  * Date: 30.07.2021
  * Time: 10:04 AM
@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
 import ru.interview4j.exception.CustomException;
-import ru.interview4j.router.request.AuthRequest;
+import ru.interview4j.rest.router.request.AuthRequest;
 import ru.interview4j.service.UserService;
 
 import static org.mockito.ArgumentMatchers.any;
