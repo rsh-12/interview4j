@@ -27,7 +27,7 @@ public class SectionRouterTest extends AbstractRouterTestClass {
 
     @Test
     public void getSection_ShouldReturnNotFound() {
-        given(sectionService.findSectionById(anyLong()))
+        given(sectionService.findOne(anyLong()))
                 .willThrow(CustomException.notFound("Section not found"));
 
         webClient.get().uri(API_SECTIONS + "/1")
@@ -44,7 +44,7 @@ public class SectionRouterTest extends AbstractRouterTestClass {
         given(section.getUserId()).willReturn(1L);
         given(section.getCreatedAt()).willReturn(LocalDateTime.now());
         given(section.getUpdatedAt()).willReturn(LocalDateTime.now());
-        given(sectionService.findSectionById(anyLong())).willReturn(Mono.just(section));
+        given(sectionService.findOne(anyLong())).willReturn(Mono.just(section));
 
         webClient.get().uri(API_SECTIONS + "/1")
                 .accept(APPLICATION_JSON)
