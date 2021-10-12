@@ -20,4 +20,6 @@ public interface SectionService {
 
     Mono<Long> countAll();
 
+    Mono<Void> delete(Long id);
+
 }

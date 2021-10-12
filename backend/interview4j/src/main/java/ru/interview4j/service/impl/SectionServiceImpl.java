@@ -61,4 +61,10 @@ public class SectionServiceImpl implements SectionService {
         return sectionRepository.count();
     }
 
+    @Override
+    public Mono<Void> delete(Long id) {
+        log.debug("Request to delete Section: {}", id);
+        return sectionRepository.deleteById(id);
+    }
+
 }
