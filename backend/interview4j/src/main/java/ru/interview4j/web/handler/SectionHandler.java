@@ -46,7 +46,7 @@ public class SectionHandler {
         String size = request.queryParam("size").orElse("20");
 
         Flux<SectionDto> sectionsFlux = sectionService
-                .findSections(Long.parseLong(page), Long.parseLong(size))
+                .findAll(Long.parseLong(page), Long.parseLong(size))
                 .map(CustomMapper::mapToDto);
 
         return ok().contentType(APPLICATION_JSON)

@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.domain.Section;
-import ru.interview4j.exception.CustomException;
 import ru.interview4j.repository.SectionRepository;
 import ru.interview4j.service.SectionService;
 
@@ -37,12 +36,18 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public Flux<Section> findSections(long page, long size) {
+    public Flux<Section> findAll(long page, long size) {
+        log.debug("Request to get all Sections as a page");
         return sectionRepository.findAll()
                 .sort(Comparator.comparing(Section::getCreatedAt))
                 .skip(page * size)
-                .take(size)
-                .switchIfEmpty(Mono.error(() -> CustomException.notFound("No sections found")));
+                .take(size);
+    }
+
+    @Override
+    public Flux<Section> findAll() {
+        log.debug("Request to get all Sections");
+        return sectionRepository.findAll();
     }
 
     @Override

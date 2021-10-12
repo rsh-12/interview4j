@@ -12,7 +12,9 @@ public interface SectionService {
 
     Mono<Section> findOne(Long id);
 
-    Flux<Section> findSections(long page, long size);
+    Flux<Section> findAll(long page, long size);
+
+    Flux<Section> findAll();
 
     Mono<Section> save(Section section);
 
