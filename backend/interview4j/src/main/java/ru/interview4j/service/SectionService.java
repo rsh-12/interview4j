@@ -14,4 +14,6 @@ public interface SectionService {
 
     Flux<Section> findSections(long page, long size);
 
+    Mono<Section> save(Section section);
+
 }
