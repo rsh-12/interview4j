@@ -1,4 +1,4 @@
-package ru.interview4j.rest.handler;
+package ru.interview4j.web.handler;
 /*
  * Date: 05.08.2021
  * Time: 10:14 AM
