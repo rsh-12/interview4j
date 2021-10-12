@@ -9,6 +9,7 @@ import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
@@ -42,10 +43,11 @@ public class Question {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @NonNull
     private Long sectionId;
 
-    @NonNull
+    @Transient
+    private Section section;
+
     private Long userId;
 
     @Builder(setterPrefix = "set")
@@ -54,6 +56,16 @@ public class Question {
         this.body = body;
         this.sectionId = sectionId;
         this.userId = userId;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+        this.sectionId = section != null ? section.getId() : null;
+    }
+
+    public Question section(Section section) {
+        this.setSection(section);
+        return this;
     }
 
 }
