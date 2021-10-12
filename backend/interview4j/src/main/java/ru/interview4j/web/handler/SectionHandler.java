@@ -32,7 +32,7 @@ public class SectionHandler {
 
     public @NonNull Mono<ServerResponse> getSectionById(ServerRequest request) {
         Long sectionId = Long.valueOf(request.pathVariable("id"));
-        Mono<SectionDto> section = sectionService.findSectionById(sectionId)
+        Mono<SectionDto> section = sectionService.findOne(sectionId)
                 .switchIfEmpty(Mono.error(() -> CustomException.notFound("Section not found")))
                 .map(CustomMapper::mapToDto);
 

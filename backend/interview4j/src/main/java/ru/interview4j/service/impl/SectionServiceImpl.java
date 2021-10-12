@@ -30,8 +30,10 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public Mono<Section> findSectionById(Long sectionId) {
-        return sectionRepository.findById(sectionId);
+    @Transactional(readOnly = true)
+    public Mono<Section> findOne(Long id) {
+        log.debug("Request to get Section: {}", id);
+        return sectionRepository.findById(id);
     }
 
     @Override

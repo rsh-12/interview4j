@@ -10,7 +10,7 @@ import ru.interview4j.domain.Section;
 
 public interface SectionService {
 
-    Mono<Section> findSectionById(Long sectionId);
+    Mono<Section> findOne(Long id);
 
     Flux<Section> findSections(long page, long size);
 
