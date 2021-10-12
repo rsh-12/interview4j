@@ -18,4 +18,6 @@ public interface SectionService {
 
     Mono<Section> save(Section section);
 
+    Mono<Long> countAll();
+
 }

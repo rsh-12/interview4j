@@ -56,4 +56,9 @@ public class SectionServiceImpl implements SectionService {
         return sectionRepository.save(section);
     }
 
+    @Override
+    public Mono<Long> countAll() {
+        return sectionRepository.count();
+    }
+
 }
