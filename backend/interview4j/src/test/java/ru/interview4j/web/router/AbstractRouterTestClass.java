@@ -1,4 +1,4 @@
-package ru.interview4j.rest.router;
+package ru.interview4j.web.router;
 /*
  * Date: 05.08.2021
  * Time: 11:41 AM

@@ -8,7 +8,7 @@ import lombok.NonNull;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import ru.interview4j.rest.router.request.AuthRequest;
+import ru.interview4j.web.router.request.AuthRequest;
 
 public record CredentialsValidator() implements Validator {
 

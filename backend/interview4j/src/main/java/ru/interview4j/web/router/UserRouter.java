@@ -1,7 +1,7 @@
-package ru.interview4j.rest.router;
+package ru.interview4j.web.router;
 /*
- * Date: 08.08.2021
- * Time: 12:49 PM
+ * Date: 25.07.2021
+ * Time: 12:15 AM
  * */
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import ru.interview4j.rest.handler.QuestionHandler;
+import ru.interview4j.web.handler.UserHandler;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
@@ -17,21 +17,20 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class QuestionRouter {
+public class UserRouter {
 
-    private final static String API_QUESTIONS = "/api/sections/{sectionId}/questions";
+    private final static String API_USERS = "/api/users";
 
-    private final QuestionHandler questionHandler;
+    private final UserHandler userHandler;
 
     @Autowired
-    public QuestionRouter(QuestionHandler questionHandler) {
-        this.questionHandler = questionHandler;
+    public UserRouter(UserHandler userHandler) {
+        this.userHandler = userHandler;
     }
 
     @Bean
-    public RouterFunction<ServerResponse> questionRoutes() {
-        return route(GET(API_QUESTIONS + "/{id}").and(accept(APPLICATION_JSON)),
-                questionHandler::getQuestionById);
+    public RouterFunction<ServerResponse> userRoutes() {
+        return route(GET(API_USERS + "/{id}").and(accept(APPLICATION_JSON)),
+                userHandler::getUserById);
     }
-
 }

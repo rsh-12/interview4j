@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 import ru.interview4j.domain.User;
 import ru.interview4j.exception.CustomException;
 import ru.interview4j.repository.UserRepository;
-import ru.interview4j.rest.router.request.AuthRequest;
+import ru.interview4j.web.router.request.AuthRequest;
 import ru.interview4j.service.RoleService;
 import ru.interview4j.service.UserService;
 

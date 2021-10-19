@@ -1,4 +1,4 @@
-package ru.interview4j.rest.handler;
+package ru.interview4j.web.handler;
 /*
  * Date: 05.08.2021
  * Time: 10:14 AM
@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.interview4j.dto.SectionDto;
+import ru.interview4j.exception.CustomException;
 import ru.interview4j.service.SectionService;
 import ru.interview4j.util.CustomMapper;
 
@@ -31,7 +32,9 @@ public class SectionHandler {
 
     public @NonNull Mono<ServerResponse> getSectionById(ServerRequest request) {
         Long sectionId = Long.valueOf(request.pathVariable("id"));
-        Mono<SectionDto> section = sectionService.findSectionById(sectionId).map(CustomMapper::mapToDto);
+        Mono<SectionDto> section = sectionService.findOne(sectionId)
+                .switchIfEmpty(Mono.error(() -> CustomException.notFound("Section not found")))
+                .map(CustomMapper::mapToDto);
 
         return section.flatMap(sectionDto -> ok()
                 .contentType(APPLICATION_JSON)
@@ -43,7 +46,7 @@ public class SectionHandler {
         String size = request.queryParam("size").orElse("20");
 
         Flux<SectionDto> sectionsFlux = sectionService
-                .findSections(Long.parseLong(page), Long.parseLong(size))
+                .findAll(Long.parseLong(page), Long.parseLong(size))
                 .map(CustomMapper::mapToDto);
 
         return ok().contentType(APPLICATION_JSON)
